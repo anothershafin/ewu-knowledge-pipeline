@@ -1,0 +1,726 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>EWU Knowledge Pipeline | Quality report</title>
+<style>:root{color-scheme:light}*{box-sizing:border-box}body{margin:0;background:#f1f5f9;color:#172033;font:16px/1.6 system-ui,sans-serif}main{max-width:1180px;margin:auto;padding:40px 24px}h1{font-size:38px;line-height:1.15;letter-spacing:-1px}h2{font-size:23px}.eyebrow{color:#2563eb;font-weight:700}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card,section{background:white;border:1px solid #dbe3ed;border-radius:12px;padding:24px;margin:20px 0}.card strong{display:block;font-size:32px}.notice{background:#fff7df;border-left:4px solid #d97706;padding:20px;border-radius:6px}.muted{color:#536174}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;background:#f8fafc;padding:18px;border-radius:6px}.scroll{overflow:auto}table{border-collapse:collapse;width:100%;min-width:720px;font-size:13px}th,td{padding:12px;text-align:left;border-bottom:1px solid #e2e8f0;vertical-align:top;overflow-wrap:anywhere;max-width:450px}th{background:#eaf0f8}img{max-width:100%;height:auto}a{color:#1d4ed8}@media(max-width:650px){.cards{grid-template-columns:repeat(2,1fr)}h1{font-size:29px}main{padding:24px 14px}section{padding:16px}}</style></head><body><main>
+<p class="eyebrow">PUBLIC DOCUMENTS · TRACEABLE SOURCES · MEASURED QUALITY</p><h1>EWU Knowledge Base Pipeline</h1><p class="muted">Independent research project · generated 2026-10-26T04:37:29.062700+06:00</p>
+<p>A reproducible data layer for institutional search: collection, structured extraction, privacy filtering, semantic retrieval and prerequisite references.</p>
+<div class="notice"><strong>Evaluation status</strong><br>Human topic labels, PII span annotations and frozen gold source answers must be completed before accuracy claims can be made. Automated extraction and graph counts are descriptive checks. Rule discrepancies require official effective-date review.</div>
+<div class="cards"><div class="card">Sources<strong>17</strong></div><div class="card">Extracted units<strong>1782</strong></div><div class="card">Sections<strong>3107</strong></div><div class="card">Chunks<strong>2920</strong></div><div class="card">Course records<strong>751</strong></div><div class="card">Redactions<strong>2556</strong></div></div>
+<section><h2>Source manifest</h2><p><a href="manifest.csv">Full manifest with official URLs and complete checksums</a></p><div class="scroll"><table><thead><tr><th>Source</th><th>HTTP</th><th>Size (KB)</th><th>Retrieved (Dhaka)</th><th>SHA256 prefix</th></tr></thead><tbody><tr><td>S1</td><td>200</td><td>5161.8</td><td>2026-10-26T03:40:38.898775+06:00</td><td>d53ec61af6f9b9db</td></tr><tr><td>W1</td><td>200</td><td>123.7</td><td>2026-10-26T03:41:54.366536+06:00</td><td>91f7fde9bd3035ce</td></tr><tr><td>W2</td><td>200</td><td>96.7</td><td>2026-10-26T03:41:54.901656+06:00</td><td>03ba76cd6cbe74e5</td></tr><tr><td>W3</td><td>200</td><td>111.5</td><td>2026-10-26T03:41:58.302161+06:00</td><td>09179c31d62e9b3b</td></tr><tr><td>W4</td><td>200</td><td>99.4</td><td>2026-10-26T03:42:01.427955+06:00</td><td>91cc271c0da1c552</td></tr><tr><td>W5</td><td>200</td><td>165.5</td><td>2026-10-26T03:42:03.889869+06:00</td><td>865c995b02ad3cda</td></tr><tr><td>W6</td><td>200</td><td>152.0</td><td>2026-10-26T03:42:06.885979+06:00</td><td>9be6c78724da0135</td></tr><tr><td>W7</td><td>200</td><td>95.4</td><td>2026-10-26T03:42:10.724559+06:00</td><td>a85167da29815135</td></tr><tr><td>W8</td><td>200</td><td>126.3</td><td>2026-10-26T03:42:12.984133+06:00</td><td>9aca738315e980eb</td></tr><tr><td>C1</td><td>200</td><td>326.5</td><td>2026-10-26T03:42:16.651127+06:00</td><td>882771f826ca8948</td></tr><tr><td>C2</td><td>200</td><td>201.9</td><td>2026-10-26T03:42:21.572812+06:00</td><td>22b90dc17c8e0991</td></tr><tr><td>C3</td><td>200</td><td>172.5</td><td>2026-10-26T03:42:25.079852+06:00</td><td>3f70e287a77a15cf</td></tr><tr><td>C4</td><td>200</td><td>109.6</td><td>2026-10-26T03:42:28.572650+06:00</td><td>d855ba61bef31dfb</td></tr><tr><td>P1</td><td>200</td><td>90.6</td><td>2026-10-26T03:42:30.646989+06:00</td><td>7abe8978e8f14019</td></tr><tr><td>P2</td><td>200</td><td>78.0</td><td>2026-10-26T03:42:36.766841+06:00</td><td>4918ca7e853e6624</td></tr><tr><td>P3</td><td>200</td><td>140.7</td><td>2026-10-26T03:42:38.007485+06:00</td><td>9f42b1ca8fb91417</td></tr><tr><td>P4</td><td>200</td><td>235.2</td><td>2026-10-26T03:42:41.287444+06:00</td><td>8b238e17c5528395</td></tr></tbody></table></div></section>
+<section><h2>Extraction and cleaning</h2><p>1782 extracted units; 1 empty source panel(s) quarantined. 1,807,102 → 1,629,945 characters after cleaning.</p><details><summary>Inspect measurements and checks</summary><pre>{
+  &quot;extraction&quot;: {
+    &quot;units_by_source&quot;: {
+      &quot;S1&quot;: 524,
+      &quot;W1&quot;: 62,
+      &quot;W2&quot;: 10,
+      &quot;W3&quot;: 4,
+      &quot;W4&quot;: 2,
+      &quot;W5&quot;: 143,
+      &quot;W6&quot;: 91,
+      &quot;W7&quot;: 0,
+      &quot;W8&quot;: 34,
+      &quot;C1&quot;: 425,
+      &quot;C2&quot;: 191,
+      &quot;C3&quot;: 235,
+      &quot;C4&quot;: 29,
+      &quot;P1&quot;: 6,
+      &quot;P2&quot;: 5,
+      &quot;P3&quot;: 11,
+      &quot;P4&quot;: 10
+    },
+    &quot;units&quot;: 1782,
+    &quot;possibly_scanned&quot;: [
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 3
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 7
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 8
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 9
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 19
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 20
+      }
+    ],
+    &quot;empty_sources_quarantined&quot;: [
+      &quot;W7&quot;
+    ],
+    &quot;status&quot;: &quot;needs_review&quot;,
+    &quot;fallback_units&quot;: 0
+  },
+  &quot;cleaning&quot;: {
+    &quot;rules&quot;: {
+      &quot;page_number&quot;: 53088,
+      &quot;hyphen_joins&quot;: 63,
+      &quot;repeated_margin&quot;: 8103
+    },
+    &quot;large_losses&quot;: [
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 1,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.452
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 3,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 6,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.431
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 7,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 8,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 9,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 11,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.402
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 19,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 20,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 71,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.52
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 77,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.568
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 78,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.54
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 79,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.541
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 84,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.626
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 85,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.561
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 86,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.513
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 87,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.552
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 92,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.701
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 93,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.674
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 108,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.492
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 114,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.566
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 115,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.476
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 116,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.525
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 117,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.629
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 118,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.536
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 119,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.534
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 120,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.604
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 121,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.589
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 131,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.527
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 132,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.527
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 134,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.507
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 135,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.471
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 137,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.796
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 138,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.769
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 145,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.521
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 158,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.487
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 159,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.481
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 160,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.447
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 161,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.49
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 162,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.42
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 164,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.424
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 170,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.464
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 171,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.511
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 192,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.626
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 221,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.585
+      },
+      {
+        &quot;doc_id&quot;: &quot;S1&quot;,
+        &quot;page&quot;: 228,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.673
+      },
+      {
+        &quot;doc_id&quot;: &quot;W5&quot;,
+        &quot;page&quot;: null,
+        &quot;block&quot;: 1,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;W5&quot;,
+        &quot;page&quot;: null,
+        &quot;block&quot;: 2,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;W5&quot;,
+        &quot;page&quot;: null,
+        &quot;block&quot;: 3,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;W5&quot;,
+        &quot;page&quot;: null,
+        &quot;block&quot;: 4,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;W5&quot;,
+        &quot;page&quot;: null,
+        &quot;block&quot;: 5,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;W5&quot;,
+        &quot;page&quot;: null,
+        &quot;block&quot;: 6,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;W5&quot;,
+        &quot;page&quot;: null,
+        &quot;block&quot;: 7,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;W5&quot;,
+        &quot;page&quot;: null,
+        &quot;block&quot;: 8,
+        &quot;loss_fraction&quot;: 1.0
+      },
+      {
+        &quot;doc_id&quot;: &quot;P1&quot;,
+        &quot;page&quot;: 1,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.87
+      },
+      {
+        &quot;doc_id&quot;: &quot;P2&quot;,
+        &quot;page&quot;: 1,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.875
+      },
+      {
+        &quot;doc_id&quot;: &quot;P3&quot;,
+        &quot;page&quot;: 1,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.762
+      },
+      {
+        &quot;doc_id&quot;: &quot;P3&quot;,
+        &quot;page&quot;: 11,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.4
+      },
+      {
+        &quot;doc_id&quot;: &quot;P4&quot;,
+        &quot;page&quot;: 1,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.769
+      },
+      {
+        &quot;doc_id&quot;: &quot;P4&quot;,
+        &quot;page&quot;: 10,
+        &quot;block&quot;: null,
+        &quot;loss_fraction&quot;: 0.455
+      }
+    ],
+    &quot;rule_units&quot;: {
+      &quot;repeated_margin&quot;: &quot;characters removed&quot;,
+      &quot;page_number&quot;: &quot;characters removed&quot;,
+      &quot;hyphen_joins&quot;: &quot;end-of-line joins&quot;
+    },
+    &quot;before_chars&quot;: 1807102,
+    &quot;after_chars&quot;: 1629945
+  }
+}</pre></details></section><section><h2>Structure and version checks</h2><p>3107 sections; 751 source-specific course records; 26 rule facts compared and 19 discrepancies flagged.</p><details><summary>Inspect measurements and checks</summary><pre>{
+  &quot;sections&quot;: 3107,
+  &quot;sections_by_source&quot;: {
+    &quot;S1&quot;: 2867,
+    &quot;W1&quot;: 11,
+    &quot;W2&quot;: 1,
+    &quot;W3&quot;: 3,
+    &quot;W4&quot;: 1,
+    &quot;W5&quot;: 26,
+    &quot;W6&quot;: 9,
+    &quot;W8&quot;: 12,
+    &quot;C1&quot;: 48,
+    &quot;C2&quot;: 22,
+    &quot;C3&quot;: 27,
+    &quot;C4&quot;: 1,
+    &quot;P1&quot;: 18,
+    &quot;P2&quot;: 15,
+    &quot;P3&quot;: 19,
+    &quot;P4&quot;: 27
+  },
+  &quot;courses&quot;: 751,
+  &quot;courses_by_source&quot;: {
+    &quot;C1&quot;: 46,
+    &quot;S1&quot;: 705
+  },
+  &quot;edges&quot;: 676,
+  &quot;dangling_references&quot;: [
+    &quot;CSE301&quot;,
+    &quot;CSE431&quot;
+  ],
+  &quot;unresolved_prerequisites&quot;: 223,
+  &quot;candidate_conflicts&quot;: [
+    {
+      &quot;rule&quot;: &quot;grade_point_A&quot;,
+      &quot;bulletin_value&quot;: &quot;4.00&quot;,
+      &quot;web_value&quot;: &quot;3.75&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;grade_point_A-&quot;,
+      &quot;bulletin_value&quot;: &quot;3.70&quot;,
+      &quot;web_value&quot;: &quot;3.50&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;grade_point_B+&quot;,
+      &quot;bulletin_value&quot;: &quot;3.30&quot;,
+      &quot;web_value&quot;: &quot;3.25&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;grade_point_B-&quot;,
+      &quot;bulletin_value&quot;: &quot;2.70&quot;,
+      &quot;web_value&quot;: &quot;2.75&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;grade_point_C&quot;,
+      &quot;bulletin_value&quot;: &quot;2.00&quot;,
+      &quot;web_value&quot;: &quot;2.25&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;grade_point_C+&quot;,
+      &quot;bulletin_value&quot;: &quot;2.30&quot;,
+      &quot;web_value&quot;: &quot;2.50&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;grade_point_D&quot;,
+      &quot;bulletin_value&quot;: &quot;1.00&quot;,
+      &quot;web_value&quot;: &quot;2.00&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;score_bounds_A&quot;,
+      &quot;bulletin_value&quot;: &quot;[90.0, 97.0]&quot;,
+      &quot;web_value&quot;: &quot;[75.0, 80.0]&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;score_bounds_A+&quot;,
+      &quot;bulletin_value&quot;: &quot;[97.0, 100.0]&quot;,
+      &quot;web_value&quot;: &quot;[80.0]&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;score_bounds_A-&quot;,
+      &quot;bulletin_value&quot;: &quot;[87.0, 90.0]&quot;,
+      &quot;web_value&quot;: &quot;[70.0, 75.0]&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;score_bounds_B&quot;,
+      &quot;bulletin_value&quot;: &quot;[80.0, 83.0]&quot;,
+      &quot;web_value&quot;: &quot;[60.0, 65.0]&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;score_bounds_B+&quot;,
+      &quot;bulletin_value&quot;: &quot;[83.0, 87.0]&quot;,
+      &quot;web_value&quot;: &quot;[65.0, 70.0]&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;score_bounds_B-&quot;,
+      &quot;bulletin_value&quot;: &quot;[77.0, 80.0]&quot;,
+      &quot;web_value&quot;: &quot;[55.0, 60.0]&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;score_bounds_C&quot;,
+      &quot;bulletin_value&quot;: &quot;[70.0, 73.0]&quot;,
+      &quot;web_value&quot;: &quot;[45.0, 50.0]&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;score_bounds_C+&quot;,
+      &quot;bulletin_value&quot;: &quot;[73.0, 77.0]&quot;,
+      &quot;web_value&quot;: &quot;[50.0, 55.0]&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;score_bounds_D&quot;,
+      &quot;bulletin_value&quot;: &quot;[60.0, 63.0]&quot;,
+      &quot;web_value&quot;: &quot;[40.0, 45.0]&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;score_bounds_F&quot;,
+      &quot;bulletin_value&quot;: &quot;[60.0]&quot;,
+      &quot;web_value&quot;: &quot;[40.0]&quot;,
+      &quot;bulletin_page&quot;: &quot;[216]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;undergraduate_probation_recovery_cgpa&quot;,
+      &quot;bulletin_value&quot;: &quot;2.00&quot;,
+      &quot;web_value&quot;: &quot;2.25&quot;,
+      &quot;bulletin_page&quot;: &quot;[217]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    },
+    {
+      &quot;rule&quot;: &quot;undergraduate_probation_upper_cgpa&quot;,
+      &quot;bulletin_value&quot;: &quot;2.00&quot;,
+      &quot;web_value&quot;: &quot;2.25&quot;,
+      &quot;bulletin_page&quot;: &quot;[217]&quot;,
+      &quot;web_url&quot;: &quot;https://www.ewubd.edu/grades-rules-and-regulations&quot;,
+      &quot;status&quot;: &quot;extracted_discrepancy_verify_effective_date&quot;
+    }
+  ],
+  &quot;compared_rules&quot;: [
+    &quot;automatic_dismissal_cgpa&quot;,
+    &quot;f_grade_retake_limit&quot;,
+    &quot;grade_point_A&quot;,
+    &quot;grade_point_A+&quot;,
+    &quot;grade_point_A-&quot;,
+    &quot;grade_point_B&quot;,
+    &quot;grade_point_B+&quot;,
+    &quot;grade_point_B-&quot;,
+    &quot;grade_point_C&quot;,
+    &quot;grade_point_C+&quot;,
+    &quot;grade_point_D&quot;,
+    &quot;grade_point_F&quot;,
+    &quot;non_f_retake_count&quot;,
+    &quot;retake_cgpa_basis&quot;,
+    &quot;score_bounds_A&quot;,
+    &quot;score_bounds_A+&quot;,
+    &quot;score_bounds_A-&quot;,
+    &quot;score_bounds_B&quot;,
+    &quot;score_bounds_B+&quot;,
+    &quot;score_bounds_B-&quot;,
+    &quot;score_bounds_C&quot;,
+    &quot;score_bounds_C+&quot;,
+    &quot;score_bounds_D&quot;,
+    &quot;score_bounds_F&quot;,
+    &quot;undergraduate_probation_recovery_cgpa&quot;,
+    &quot;undergraduate_probation_upper_cgpa&quot;
+  ],
+  &quot;unmatched_rules&quot;: [
+    &quot;grade_point_C-&quot;,
+    &quot;grade_point_D+&quot;,
+    &quot;score_bounds_C-&quot;,
+    &quot;score_bounds_D+&quot;
+  ],
+  &quot;conflict_coverage&quot;: &quot;Explicit undergraduate probation thresholds, dismissal, grade points/score bounds and retake facts; effective dates require human review.&quot;
+}</pre></details></section><section><h2>Student-search curation</h2><p>563 personnel or bibliography sections excluded from search. They remain local for the PII audit.</p><details><summary>Inspect measurements and checks</summary><pre>{
+  &quot;sections&quot;: 3107,
+  &quot;topics&quot;: {
+    &quot;other&quot;: 820,
+    &quot;registration&quot;: 16,
+    &quot;fees_refunds&quot;: 14,
+    &quot;graduation&quot;: 19,
+    &quot;admission&quot;: 17,
+    &quot;grading_cgpa&quot;: 10,
+    &quot;scholarship&quot;: 30,
+    &quot;conduct_discipline&quot;: 64,
+    &quot;course_info&quot;: 1987,
+    &quot;plagiarism_ai&quot;: 40,
+    &quot;calendar&quot;: 28,
+    &quot;attendance&quot;: 4,
+    &quot;grievance&quot;: 36,
+    &quot;probation_dismissal&quot;: 8,
+    &quot;retake&quot;: 2,
+    &quot;online_classes&quot;: 12
+  },
+  &quot;index_eligible_sections&quot;: 2544,
+  &quot;excluded_sections&quot;: 563,
+  &quot;human_agreement&quot;: &quot;pending human annotation&quot;
+}</pre></details></section><section><h2>Privacy filtering</h2><p>2556 redactions. Precision and recall require independent human span labels.</p><details><summary>Inspect measurements and checks</summary><pre>{
+  &quot;redactions&quot;: 2556,
+  &quot;by_type&quot;: {
+    &quot;PERSON&quot;: 2551,
+    &quot;PHONE&quot;: 4,
+    &quot;EMAIL&quot;: 1
+  },
+  &quot;by_detector&quot;: {
+    &quot;ner&quot;: 2551,
+    &quot;regex&quot;: 5
+  },
+  &quot;fragments&quot;: 4558,
+  &quot;fingerprint&quot;: &quot;c7da51a609c928fa9c4d15176542e15e474880d32137cd44f90a669c01b47002&quot;,
+  &quot;threshold&quot;: 0.85,
+  &quot;device&quot;: &quot;cuda&quot;,
+  &quot;precision_recall&quot;: &quot;pending human annotation; detection is not a guarantee of anonymization&quot;
+}</pre></details></section><section><h2>Annotation quality</h2><p>pending human annotation</p><details><summary>Inspect measurements and checks</summary><pre>{
+  &quot;status&quot;: &quot;pending human annotation&quot;,
+  &quot;completed&quot;: 0,
+  &quot;required&quot;: 100
+}</pre></details></section><section><h2>PII evaluation</h2><p>pending human annotation</p><details><summary>Inspect measurements and checks</summary><pre>{
+  &quot;status&quot;: &quot;pending human annotation&quot;,
+  &quot;pages&quot;: 24,
+  &quot;completed&quot;: 0
+}</pre></details></section><section><h2>Retrieval evaluation</h2><p>pending frozen human-reviewed question set</p><details><summary>Inspect measurements and checks</summary><pre>{
+  &quot;status&quot;: &quot;pending frozen human-reviewed question set&quot;
+}</pre></details></section><section><h2>Prerequisite graph checks</h2><p>48 nodes and 40 edges; 0 cycle(s); 2 unresolved reference(s).</p><details><summary>Inspect measurements and checks</summary><pre>{
+  &quot;source&quot;: &quot;C1&quot;,
+  &quot;nodes&quot;: 48,
+  &quot;edges&quot;: 40,
+  &quot;cycles&quot;: [],
+  &quot;isolated_courses&quot;: [
+    &quot;CSE200&quot;,
+    &quot;CSE399&quot;,
+    &quot;CSE400&quot;
+  ],
+  &quot;unresolved&quot;: [
+    &quot;CSE301&quot;,
+    &quot;CSE431&quot;
+  ],
+  &quot;alternative_edges&quot;: 0,
+  &quot;limitations&quot;: &quot;Graph represents prerequisite references; OR alternatives and non-course conditions require reading the stored expression.&quot;
+}</pre></details></section>
+<section><h2>Topic coverage</h2><a href="figures/topics.png" aria-label="Open full-size figure"><img src="figures/topics.png" alt="Chunks by automatic topic"></a><p class="muted">Select the figure to view it at full size.</p></section><section><h2>CSE prerequisite references</h2><a href="figures/prerequisite_graph.png" aria-label="Open full-size figure"><img src="figures/prerequisite_graph.png" alt="Directed prerequisite reference graph"></a><p class="muted">Select the figure to view it at full size.</p></section>
+<section><h2>Limitations and provenance</h2><p>Web retrieval dates do not establish policy effective dates. PDF page numbers are physical PDF pages. Regex and English NER may miss personal data; redaction is not a guarantee of anonymization. The nominal 300-token experiment uses a shared content cap of 254 to respect MiniLM's default input limit. No chatbot or generated answer is included.</p><p>Source materials remain local and are not redistributed. See the manifest, model revision lock and run records for reproducibility. This project is not affiliated with East West University.</p></section>
+</main></body></html>

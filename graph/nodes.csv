@@ -1,0 +1,49 @@
+code,title,credits,source,locator,prerequisite_expression,placeholder
+CSE103,Structured Programming,4.5,C1,headingOne0,None,False
+CSE106,Discrete Mathematics,3,C1,headingOne1,CSE103 Structured Programming,False
+CSE110,Object Oriented Programming,4.5,C1,headingOne2,CSE106 Discrete Mathematics,False
+CSE200,Computer-Aided Engineering Drawing,1,C1,headingOne3,None,False
+CSE207,Data Structures,4,C1,headingOne4,CSE110 Object Oriented Programming,False
+CSE209,Electrical Circuits,4,C1,headingOne5,None,False
+CSE246,Algorithms,4.5,C1,headingOne6,CSE207 Data Structures,False
+CSE251,Electronic Circuits,4,C1,headingOne7,CSE209 Electrical Circuits,False
+CSE301,Unresolved reference,,C1,,,True
+CSE302,Database Systems,4.5,C1,headingOne8,CSE106Discrete Mathematics,False
+CSE313,Theory of Computation,3,C1,headingOne21,CSE246 Algorithms,False
+CSE325,Operating Systems,4,C1,headingOne9,None,False
+CSE345,Digital Logic Design,4,C1,headingOne10,CSE251Electronic Circuit,False
+CSE347,Information System Analysis and Design,4,C1,headingOne11,CSE302 Database Systems,False
+CSE350,Data Communications,3,C1,headingOne22,CSE 251 Electronic Circuits,False
+CSE355,Digital System Design,3,C1,headingOne23,CSE345 Digital Logic Design,False
+CSE360,Computer Architecture,3,C1,headingOne12,CSE325 Operating Systems,False
+CSE366,Artificial Intelligence,3,C1,headingOne24,CSE246 Algorithms,False
+CSE370,Mobile Programming,4,C1,headingOne13,CSE110 Object Oriented Programming,False
+CSE399,Cyber Ethics and Legal Framework,3,C1,headingOne14,none,False
+CSE400,Capstone Project,0,C1,headingOne20,Students must complete at least 105 credits.,False
+CSE405,Computer Networks,4,C1,headingOne15,CSE246 Algorithms,False
+CSE406,Internet of Things,3,C1,headingOne25,CSE405 Computer Network,False
+CSE412,Software Engineering,4,C1,headingOne16,CSE347 Information System Analysis and Design,False
+CSE420,Computer Graphics,3,C1,headingOne26,CSE246 Algorithms,False
+CSE422,Simulation and Modeling,3,C1,headingOne27,CSE246 Algorithms,False
+CSE423,Software Architecture,3,C1,headingOne28,CSE412 Software Engineering,False
+CSE425,Numerical Methods,3,C1,headingOne29,CSE103 Structured Programming,False
+CSE428,Human Computer Interactions,3,C1,headingOne30,CSE412 Software Engineering,False
+CSE430,Software Testing and Quality Assurance,3,C1,headingOne31,CSE412 Software Engineering,False
+CSE431,Unresolved reference,,C1,,,True
+CSE438,Digital Image Processing,3,C1,headingOne32,CSE246 Algorithms,False
+CSE442,Microprocessors and Microcontrollers,3,C1,headingOne17,CSE360 Computer Architecture,False
+CSE452,Distributed Systems and Algorithms,3,C1,headingOne33,CSE 325 Operating Systems.,False
+CSE453,Wireless Networks,3,C1,headingOne34,CSE405 Computer Networks,False
+CSE457,Cellular Networks,3,C1,headingOne35,CSE405 Computer Networks,False
+CSE471,Compiler Design,3,C1,headingOne36,CSE313 Theory of Computations,False
+CSE475,Machine Learning,3,C1,headingOne37,CSE366 Artificial Intelligence,False
+CSE477,Data Mining,3,C1,headingOne38,CSE366 Artificial Intelligence,False
+CSE479,Web Programming,4,C1,headingOne18,CSE302 Database Systems,False
+CSE483,Graph,3,C1,headingOne39,CSE246 Algorithms,False
+CSE484,Computational Geometry,3,C1,headingOne40,CSE246 Algorithms,False
+CSE486,Bioinformatics Algorithms,3,C1,headingOne41,CSE246 Algorithms,False
+CSE487,Big Data Analytics,3,C1,headingOne42,CSE301 Database Systems,False
+CSE489,Mobile Application Development,3,C1,headingOne43,CSE431 Mobile Programming,False
+CSE491,VLSI Design,3,C1,headingOne44,CSE345 Digital Logic Design,False
+CSE492,Robotics,3,C1,headingOne45,CSE 442 Microprocessors and Microcontrollers,False
+CSE494,Embedded Systems,3,C1,headingOne46,CSE442 Microprocessors and Microcontrollers,False

@@ -1,0 +1,18 @@
+sources:
+  - {id: S1, type: pdf, category: bulletin, version: bulletin-2019, url: 'https://www.ewubd.edu/storage/app/media/Undergraduate%20Bulletin/ewuundergraduate-bulletin-14th-edition-doc-version.pdf'}
+  - {id: W1, type: html, category: rules, url: 'https://www.ewubd.edu/grades-rules-and-regulations'}
+  - {id: W2, type: html, category: conduct, url: 'https://www.ewubd.edu/student-rules-regulation'}
+  - {id: W3, type: html, category: fees, url: 'https://www.ewubd.edu/undergraduate-tuition-fees'}
+  - {id: W4, type: html, category: admission, url: 'https://www.ewubd.edu/undergraduate-dates-deadline'}
+  - {id: W5, type: html, category: calendar, url: 'https://www.ewubd.edu/academic-calendar'}
+  - {id: W6, type: html, category: scholarship, url: 'https://www.ewubd.edu/scholarships-financial-aid'}
+  - {id: W7, type: html, category: admission, url: 'https://www.ewubd.edu/admissions-faqs'}
+  - {id: W8, type: html, category: online_classes, url: 'https://www.ewubd.edu/faq'}
+  - {id: C1, type: html, category: course_info, url: 'https://fse.ewubd.edu/computer-science-engineering/course-catalog'}
+  - {id: C2, type: html, category: course_info, url: 'https://fse.ewubd.edu/computer-science-engineering/core-courses'}
+  - {id: C3, type: html, category: course_info, url: 'https://fse.ewubd.edu/computer-science-engineering/elective-courses'}
+  - {id: C4, type: html, category: course_info, url: 'https://fse.ewubd.edu/computer-science-engineering/undergraduate-programs'}
+  - {id: P1, type: pdf, category: plagiarism_ai, url: 'https://www.ewubd.edu/storage/app/media/Policies/Plagiarism%20Policy.pdf'}
+  - {id: P2, type: pdf, category: plagiarism_ai, url: 'https://www.ewubd.edu/storage/app/media/Policies/Artificial%20Intelligence%20Policy.pdf'}
+  - {id: P3, type: pdf, category: conduct_discipline, url: 'https://www.ewubd.edu/storage/app/media/Policies/Disciplinary%20Policy.pdf'}
+  - {id: P4, type: pdf, category: grievance, url: 'https://www.ewubd.edu/storage/app/media/Policies/Grievance%20Policy_2.pdf'}

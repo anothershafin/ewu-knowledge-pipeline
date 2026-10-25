@@ -1,0 +1,59 @@
+{
+  "at": "2026-10-26T04:37:33.281471+06:00",
+  "status": "passed",
+  "manifest_checksums": 17,
+  "redacted_sections": 3107,
+  "indexes": [
+    {
+      "model": "bge",
+      "nominal_size": 200,
+      "chunks": 3222,
+      "vectors": 3222
+    },
+    {
+      "model": "minilm",
+      "nominal_size": 200,
+      "chunks": 3222,
+      "vectors": 3222
+    },
+    {
+      "model": "bge",
+      "nominal_size": 300,
+      "chunks": 2920,
+      "vectors": 2920
+    },
+    {
+      "model": "minilm",
+      "nominal_size": 300,
+      "chunks": 2920,
+      "vectors": 2920
+    }
+  ],
+  "fixture_tests": "..............                                                           [100%]\n14 passed in 0.18s",
+  "excluded_private_paths": [
+    "data/raw/S1.pdf",
+    "data/processed/documents.jsonl",
+    ".env-gpu/python.exe",
+    "work/pii_review_pages.jsonl",
+    ".cache/huggingface/hub"
+  ],
+  "empty_sources": [
+    "W7"
+  ],
+  "human_evaluation_status": {
+    "annotation": {
+      "status": "pending human annotation",
+      "completed": 0,
+      "required": 100
+    },
+    "pii": {
+      "status": "pending human annotation",
+      "pages": 24,
+      "completed": 0
+    },
+    "retrieval": {
+      "status": "pending frozen human-reviewed question set"
+    }
+  },
+  "limitations": "Automated checks do not establish PII recall or retrieval accuracy."
+}

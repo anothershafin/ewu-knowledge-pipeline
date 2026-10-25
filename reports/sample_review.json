@@ -1,0 +1,8 @@
+{
+  "reviewer": "assistant content inspection",
+  "records": 1,
+  "chunk_ids": [
+    "28319e1d94b4579bc7b34b634f083426"
+  ],
+  "scope": "Short withdrawal-policy passage inspected; no person names, emails, phone numbers or IDs present. This is not the human PII evaluation."
+}

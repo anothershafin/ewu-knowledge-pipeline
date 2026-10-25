@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ewu-knowledge-pipeline"
+version = "0.1.0"
+description = "Reproducible, privacy-filtered knowledge engineering for public university documents"
+requires-python = ">=3.12,<3.14"
+dependencies = [
+  "requests>=2.32,<3", "beautifulsoup4>=4.12,<5", "PyYAML>=6,<7",
+  "pymupdf>=1.24,<2", "pdfplumber>=0.11,<1", "pandas>=2.2,<3",
+  "networkx>=3.3,<4", "matplotlib>=3.9,<4", "numpy>=1.26,<3",
+  "transformers>=4.45,<5", "sentence-transformers>=3.3,<6",
+  "chromadb>=1.0,<2", "huggingface-hub>=0.26,<1", "torch>=2.6,<3", "tzdata>=2025.1"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "nbformat>=5,<6", "nbclient>=0.10,<1", "ipykernel>=6,<8"]
+
+[project.scripts]
+ewu-kb = "ewu_kb.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110

@@ -1,0 +1,421 @@
+{
+  "at": "2026-10-26T04:37:36.207852+06:00",
+  "notebook_executed": true,
+  "dependency_pins": 143,
+  "human_evaluation": "pending",
+  "automated_stages": "complete",
+  "statistics": {
+    "collect": {
+      "sources": 17,
+      "successful": 17,
+      "failed": []
+    },
+    "extract": {
+      "units_by_source": {
+        "S1": 524,
+        "W1": 62,
+        "W2": 10,
+        "W3": 4,
+        "W4": 2,
+        "W5": 143,
+        "W6": 91,
+        "W7": 0,
+        "W8": 34,
+        "C1": 425,
+        "C2": 191,
+        "C3": 235,
+        "C4": 29,
+        "P1": 6,
+        "P2": 5,
+        "P3": 11,
+        "P4": 10
+      },
+      "units": 1782,
+      "possibly_scanned": [
+        {
+          "doc_id": "S1",
+          "page": 3
+        },
+        {
+          "doc_id": "S1",
+          "page": 7
+        },
+        {
+          "doc_id": "S1",
+          "page": 8
+        },
+        {
+          "doc_id": "S1",
+          "page": 9
+        },
+        {
+          "doc_id": "S1",
+          "page": 19
+        },
+        {
+          "doc_id": "S1",
+          "page": 20
+        }
+      ],
+      "empty_sources_quarantined": [
+        "W7"
+      ],
+      "status": "needs_review",
+      "fallback_units": 0
+    },
+    "structure": {
+      "sections": 3107,
+      "sections_by_source": {
+        "S1": 2867,
+        "W1": 11,
+        "W2": 1,
+        "W3": 3,
+        "W4": 1,
+        "W5": 26,
+        "W6": 9,
+        "W8": 12,
+        "C1": 48,
+        "C2": 22,
+        "C3": 27,
+        "C4": 1,
+        "P1": 18,
+        "P2": 15,
+        "P3": 19,
+        "P4": 27
+      },
+      "courses": 751,
+      "courses_by_source": {
+        "C1": 46,
+        "S1": 705
+      },
+      "edges": 676,
+      "dangling_references": [
+        "CSE301",
+        "CSE431"
+      ],
+      "unresolved_prerequisites": 223,
+      "candidate_conflicts": [
+        {
+          "rule": "grade_point_A",
+          "bulletin_value": "4.00",
+          "web_value": "3.75",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "grade_point_A-",
+          "bulletin_value": "3.70",
+          "web_value": "3.50",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "grade_point_B+",
+          "bulletin_value": "3.30",
+          "web_value": "3.25",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "grade_point_B-",
+          "bulletin_value": "2.70",
+          "web_value": "2.75",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "grade_point_C",
+          "bulletin_value": "2.00",
+          "web_value": "2.25",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "grade_point_C+",
+          "bulletin_value": "2.30",
+          "web_value": "2.50",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "grade_point_D",
+          "bulletin_value": "1.00",
+          "web_value": "2.00",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "score_bounds_A",
+          "bulletin_value": "[90.0, 97.0]",
+          "web_value": "[75.0, 80.0]",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "score_bounds_A+",
+          "bulletin_value": "[97.0, 100.0]",
+          "web_value": "[80.0]",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "score_bounds_A-",
+          "bulletin_value": "[87.0, 90.0]",
+          "web_value": "[70.0, 75.0]",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "score_bounds_B",
+          "bulletin_value": "[80.0, 83.0]",
+          "web_value": "[60.0, 65.0]",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "score_bounds_B+",
+          "bulletin_value": "[83.0, 87.0]",
+          "web_value": "[65.0, 70.0]",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "score_bounds_B-",
+          "bulletin_value": "[77.0, 80.0]",
+          "web_value": "[55.0, 60.0]",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "score_bounds_C",
+          "bulletin_value": "[70.0, 73.0]",
+          "web_value": "[45.0, 50.0]",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "score_bounds_C+",
+          "bulletin_value": "[73.0, 77.0]",
+          "web_value": "[50.0, 55.0]",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "score_bounds_D",
+          "bulletin_value": "[60.0, 63.0]",
+          "web_value": "[40.0, 45.0]",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "score_bounds_F",
+          "bulletin_value": "[60.0]",
+          "web_value": "[40.0]",
+          "bulletin_page": "[216]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "undergraduate_probation_recovery_cgpa",
+          "bulletin_value": "2.00",
+          "web_value": "2.25",
+          "bulletin_page": "[217]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        },
+        {
+          "rule": "undergraduate_probation_upper_cgpa",
+          "bulletin_value": "2.00",
+          "web_value": "2.25",
+          "bulletin_page": "[217]",
+          "web_url": "https://www.ewubd.edu/grades-rules-and-regulations",
+          "status": "extracted_discrepancy_verify_effective_date"
+        }
+      ],
+      "compared_rules": [
+        "automatic_dismissal_cgpa",
+        "f_grade_retake_limit",
+        "grade_point_A",
+        "grade_point_A+",
+        "grade_point_A-",
+        "grade_point_B",
+        "grade_point_B+",
+        "grade_point_B-",
+        "grade_point_C",
+        "grade_point_C+",
+        "grade_point_D",
+        "grade_point_F",
+        "non_f_retake_count",
+        "retake_cgpa_basis",
+        "score_bounds_A",
+        "score_bounds_A+",
+        "score_bounds_A-",
+        "score_bounds_B",
+        "score_bounds_B+",
+        "score_bounds_B-",
+        "score_bounds_C",
+        "score_bounds_C+",
+        "score_bounds_D",
+        "score_bounds_F",
+        "undergraduate_probation_recovery_cgpa",
+        "undergraduate_probation_upper_cgpa"
+      ],
+      "unmatched_rules": [
+        "grade_point_C-",
+        "grade_point_D+",
+        "score_bounds_C-",
+        "score_bounds_D+"
+      ],
+      "conflict_coverage": "Explicit undergraduate probation thresholds, dismissal, grade points/score bounds and retake facts; effective dates require human review."
+    },
+    "pii": {
+      "redactions": 2556,
+      "by_type": {
+        "PERSON": 2551,
+        "PHONE": 4,
+        "EMAIL": 1
+      },
+      "by_detector": {
+        "ner": 2551,
+        "regex": 5
+      },
+      "fragments": 4558,
+      "fingerprint": "c7da51a609c928fa9c4d15176542e15e474880d32137cd44f90a669c01b47002",
+      "threshold": 0.85,
+      "device": "cuda",
+      "precision_recall": "pending human annotation; detection is not a guarantee of anonymization"
+    },
+    "chunk_200": {
+      "chunks": 3222,
+      "nominal_size": 200,
+      "effective_cap": 200,
+      "max_bge_tokens": 200,
+      "by_topic": {
+        "other": 379,
+        "registration": 28,
+        "fees_refunds": 20,
+        "graduation": 29,
+        "admission": 23,
+        "grading_cgpa": 20,
+        "scholarship": 84,
+        "conduct_discipline": 147,
+        "course_info": 2327,
+        "calendar": 28,
+        "attendance": 7,
+        "grievance": 44,
+        "plagiarism_ai": 58,
+        "probation_dismissal": 11,
+        "retake": 3,
+        "online_classes": 14
+      },
+      "by_source": {
+        "S1": 2695,
+        "W1": 19,
+        "W2": 5,
+        "W3": 4,
+        "W4": 3,
+        "W5": 26,
+        "W6": 45,
+        "W8": 14,
+        "C1": 142,
+        "C2": 67,
+        "C3": 76,
+        "C4": 27,
+        "P1": 20,
+        "P2": 17,
+        "P3": 32,
+        "P4": 30
+      }
+    },
+    "chunk_300": {
+      "chunks": 2920,
+      "nominal_size": 300,
+      "effective_cap": 254,
+      "max_bge_tokens": 254,
+      "by_topic": {
+        "other": 353,
+        "registration": 23,
+        "fees_refunds": 17,
+        "graduation": 28,
+        "admission": 22,
+        "grading_cgpa": 16,
+        "scholarship": 66,
+        "conduct_discipline": 123,
+        "course_info": 2122,
+        "calendar": 28,
+        "attendance": 6,
+        "grievance": 40,
+        "plagiarism_ai": 52,
+        "probation_dismissal": 9,
+        "retake": 2,
+        "online_classes": 13
+      },
+      "by_source": {
+        "S1": 2490,
+        "W1": 15,
+        "W2": 5,
+        "W3": 4,
+        "W4": 2,
+        "W5": 26,
+        "W6": 35,
+        "W8": 13,
+        "C1": 109,
+        "C2": 51,
+        "C3": 59,
+        "C4": 20,
+        "P1": 19,
+        "P2": 17,
+        "P3": 27,
+        "P4": 28
+      }
+    },
+    "graph": {
+      "source": "C1",
+      "nodes": 48,
+      "edges": 40,
+      "cycles": [],
+      "isolated_courses": [
+        "CSE200",
+        "CSE399",
+        "CSE400"
+      ],
+      "unresolved": [
+        "CSE301",
+        "CSE431"
+      ],
+      "alternative_edges": 0,
+      "limitations": "Graph represents prerequisite references; OR alternatives and non-course conditions require reading the stored expression."
+    },
+    "evaluate": {
+      "annotation": {
+        "status": "pending human annotation",
+        "completed": 0,
+        "required": 100
+      },
+      "pii": {
+        "status": "pending human annotation",
+        "pages": 24,
+        "completed": 0
+      },
+      "retrieval": {
+        "status": "pending frozen human-reviewed question set"
+      }
+    }
+  }
+}

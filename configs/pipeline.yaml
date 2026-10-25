@@ -1,0 +1,47 @@
+seed: 42
+device: cuda
+collection:
+  delay_seconds: 3.0
+  timeout: 120
+  user_agent: 'ewu-knowledge-pipeline/0.1 (independent research; contact: shafin.official101@gmail.com)'
+cleaning:
+  repeated_fraction: 0.30
+  margin_lines: 2
+  loss_warning: 0.40
+chunking:
+  sizes: [200, 300]
+  overlap: 50
+  # Shared cap prevents silent truncation by MiniLM's 256-token default.
+  shared_content_cap: 254
+models:
+  bge: {name: BAAI/bge-small-en-v1.5, query_prefix: 'Represent this sentence for searching relevant passages: '}
+  minilm: {name: sentence-transformers/all-MiniLM-L6-v2, query_prefix: ''}
+  ner: {name: dslim/bert-base-NER, threshold: 0.85}
+embedding:
+  batch_size: 32
+search:
+  candidate_multiplier: 6
+  current_source_bonus: 0.025
+annotation:
+  count: 100
+  pii_pages: 24
+  # Earlier entries break ties; source categories are fallback labels.
+  keywords:
+    probation_dismissal: ['probation', 'dismissal', 'dismissed']
+    plagiarism_ai: ['plagiarism', 'artificial intelligence', 'academic honesty', 'generative ai']
+    grievance: ['grievance', 'complaint', 'appeal committee']
+    retake: ['retake', 'repeat a course', 'repeating courses']
+    grading_cgpa: ['cgpa', 'gpa', 'grading', 'grade point', 'letter grade']
+    fees_refunds: ['tuition', 'refund', 'fees', 'payment']
+    scholarship: ['scholarship', 'financial aid', 'waiver']
+    attendance: ['attendance', 'absent', 'absence from classes']
+    registration: ['registration', 'add/drop', 'advising', 'withdrawal', 'leave of absence']
+    graduation: ['graduation', 'degree requirements', 'credit requirements']
+    conduct_discipline: ['disciplinary', 'misconduct', 'discipline', 'code of conduct']
+    calendar: ['academic calendar', 'semester begins', 'semester ends', 'deadline']
+    admission: ['admission', 'eligibility', 'applicant']
+    online_classes: ['online class', 'zoom', 'google classroom']
+    course_info: ['prerequisite', 'credit hours', 'course objectives', 'course outcomes']
+curation:
+  # Retain these sections for extraction/PII audits, exclude from student search.
+  excluded_bulletin_paths: [' > administration', 'administrative officers', 'administrative officials', 'faculty members', 'faculty list', 'professor', 'lecturer', 'board of trustees', '[person]', 'reference book', 'references', 'bibliography']
