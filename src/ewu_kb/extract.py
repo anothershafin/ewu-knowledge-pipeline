@@ -20,10 +20,16 @@ def html_blocks(payload, sid):
     candidates = soup.select("main, article, .page-content-section, .page-content, .entry-content, .content-area, #main-content")
     content = max(candidates, key=lambda t: len(t.get_text()), default=soup.body or soup)
     columns = content.select(".col-md-8")
+    roots = [content]
     if columns:
-        content = max(columns, key=lambda t: len(t.get_text()))
+        primary = max(columns, key=lambda t: len(t.get_text()))
+        # Some official pages place a second full-width table below the main
+        # column. Keep this article supplement without including the sidebar.
+        roots = [primary] + [tag for tag in content.select(".bottom-body")
+                             if tag is not primary and primary not in tag.parents
+                             and not any(parent in content.select(".bottom-body") for parent in tag.parents)]
     rows = []
-    for tag in content.find_all(["h1", "h2", "h3", "h4", "h5", "h6", "p", "li", "table", "summary"]):
+    for tag in [tag for root in roots for tag in root.find_all(["h1", "h2", "h3", "h4", "h5", "h6", "p", "li", "table", "summary"])]:
         if tag.find_parent(["table", "p", "li"]):
             continue
         text = tag.get_text(" ", strip=True)
@@ -36,7 +42,7 @@ def html_blocks(payload, sid):
                           for tr in tag.find_all("tr")] if tag.name == "table" else [])})
     # Some department pages use div text nodes rather than paragraphs.
     if sum(len(r["text"]) for r in rows) < 300:
-        text = content.get_text("\n", strip=True)
+        text = "\n\n".join(root.get_text("\n", strip=True) for root in roots)
         rows = [{"doc_id": sid, "page": None, "block": 1, "kind": "div", "text": text,
                  "anchor": "", "spans": [], "table": []}]
     return rows

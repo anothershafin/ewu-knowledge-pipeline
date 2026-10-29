@@ -31,10 +31,16 @@ def run():
         fig.savefig(ROOT / "reports/figures/topics.png", dpi=150)
         plt.close(fig)
     retrieval = evaluation.get("retrieval", {})
+    privacy_evaluation = evaluation.get("pii", {})
+    topic_evaluation = evaluation.get("annotation", {})
+    def percentage(value):
+        return f"{value:.1%}" if value is not None else "not defined"
     if retrieval.get("status") == "complete":
         rows = retrieval["experiments"]
         fig, ax = plt.subplots(figsize=(8, 5))
-        ax.bar([f"{r['model']} / {r['nominal_size']}" for r in rows], [r["Recall@5"] for r in rows], color="#2563eb")
+        labels = [f"{r['model']} / {r['nominal_size']}\n(max {min(r['nominal_size'], chunk.get('effective_cap', r['nominal_size']))} tokens)" for r in rows]
+        bars = ax.bar(labels, [r["Recall@5"] for r in rows], color="#2563eb")
+        ax.bar_label(bars, labels=[f"{round(r['Recall@5'] * r['n'])}/{r['n']}\n{r['Recall@5']:.1%}" for r in rows], padding=4)
         ax.set(ylim=(0, 1), ylabel="Recall@5 (question hit rate)", title="Frozen-question retrieval evaluation")
         fig.tight_layout()
         fig.savefig(ROOT / "reports/figures/retrieval.png", dpi=150)
@@ -43,16 +49,18 @@ def run():
              ("Sections", structure.get("sections", "pending")), ("Chunks", chunk.get("chunks", "pending")),
              ("Course records", structure.get("courses", "pending")), ("Redactions", pii.get("redactions", "pending"))]
     evaluation_complete = all(evaluation.get(key, {}).get("status") == "complete" for key in ("annotation", "pii", "retrieval"))
-    evaluation_note = ("Human-reviewed annotation and frozen-question evaluation are complete. Interpret the results with the sampling and tuning limitations below."
-                       if evaluation_complete else "Human topic labels, PII span annotations and frozen gold source answers must be completed before accuracy claims can be made.")
+    evaluation_note = ("Topic-label, PII-reference and frozen-question evaluations are complete. Interpret the results with the preparation, review, sampling and tuning limitations below."
+                       if evaluation_complete else "Some reference annotations or frozen source answers are still pending. Completed results below state how their references were prepared and reviewed.")
     sections = []
     summaries = {
         "Extraction and cleaning": f"{extract.get('units', 'Pending')} extracted units; {len(extract.get('empty_sources_quarantined', []))} empty source panel(s) quarantined. {clean.get('before_chars', 0):,} → {clean.get('after_chars', 0):,} characters after cleaning.",
         "Structure and version checks": f"{structure.get('sections', 'Pending')} sections; {structure.get('courses', 'pending')} source-specific course records; {len(structure.get('compared_rules', []))} rule facts compared and {len(structure.get('candidate_conflicts', []))} discrepancies flagged.",
-        "Privacy filtering": f"{pii.get('redactions', 'Pending')} redactions. Precision and recall require independent human span labels.",
+        "Privacy filtering": f"{pii.get('redactions', 'Pending')} redactions. Span metrics and reference-review details appear in the PII evaluation.",
         "Student-search curation": f"{curation.get('excluded_sections', 'Pending')} personnel or bibliography sections excluded from search. They remain local for the PII audit.",
-        "Annotation quality": evaluation.get('annotation', {}).get('status', 'Pending human labels'),
-        "PII evaluation": evaluation.get('pii', {}).get('status', 'Pending human span labels'),
+        "Annotation quality": (f"Agreement {percentage(topic_evaluation.get('agreement'))} on {topic_evaluation.get('n')} scorable passages from the {topic_evaluation.get('raw_n')} reviewed entries. Exclusions and review provenance are recorded below."
+                               if topic_evaluation.get('status') == 'complete' else topic_evaluation.get('status', 'Pending labels')),
+        "PII evaluation": (f"Exact-span precision {percentage(privacy_evaluation.get('all', {}).get('precision'))}; recall {percentage(privacy_evaluation.get('all', {}).get('recall'))} against the prepared reference. Partial-name detections and missed names limit anonymization. The preserved page/prediction snapshot and preparation details are recorded below; this is not an independent human validation of the repaired corpus."
+                           if privacy_evaluation.get('status') == 'complete' else privacy_evaluation.get('status', 'Pending span labels')),
         "Retrieval evaluation": retrieval.get('status', 'Pending frozen source answers'),
         "Prerequisite graph checks": f"{graph.get('nodes', 'Pending')} nodes and {graph.get('edges', 'pending')} edges; {len(graph.get('cycles', []))} cycle(s); {len(graph.get('unresolved', []))} unresolved reference(s)."
     }
@@ -61,7 +69,11 @@ def run():
                          ("Annotation quality", evaluation.get("annotation", {})),
                          ("PII evaluation", evaluation.get("pii", {})), ("Retrieval evaluation", retrieval),
                          ("Prerequisite graph checks", graph)):
-        extra = table(retrieval.get("experiments", [])) if title == "Retrieval evaluation" and retrieval.get("experiments") else ""
+        extra = table([{"Model": r["model"], "Nominal tokens": r["nominal_size"],
+                        "Max content tokens": min(r["nominal_size"], chunk.get("effective_cap", r["nominal_size"])),
+                        "Questions": r["n"], "Recall@1": percentage(r["Recall@1"]),
+                        "Recall@5": percentage(r["Recall@5"]), "MRR@20": f"{r['MRR']:.4f}"}
+                       for r in retrieval["experiments"]]) if title == "Retrieval evaluation" and retrieval.get("experiments") else ""
         sections.append(f'<section><h2>{title}</h2><p>{html.escape(summaries[title])}</p>{extra}<details><summary>Inspect measurements and checks</summary><pre>{html.escape(json.dumps(stage, indent=2, ensure_ascii=False))}</pre></details></section>')
     manifest_rows = [{"Source": r["id"], "HTTP": r["status"], "Size (KB)": round(int(r["bytes"]) / 1024, 1),
                       "Retrieved (Dhaka)": r["retrieved_at"], "SHA256 prefix": r["sha256"][:16]}

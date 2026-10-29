@@ -12,7 +12,7 @@ jobs:
           python-version: '3.12'
           cache: pip
       - name: Install fixture-only dependencies
-        run: python -m pip install pytest PyYAML networkx
+        run: python -m pip install pytest PyYAML networkx beautifulsoup4
       - name: Test without network or models
         env:
           PYTHONPATH: src

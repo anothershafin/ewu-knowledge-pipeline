@@ -48,9 +48,15 @@ def pdf_segments(row):
     headings = {}
     for span in spans:
         value = re.sub(r"\s+", " ", span["text"]).strip()
+        if value.casefold() in {"credit", "credits", "hours", "credit hours", "section", "description", "total"}:
+            continue
         if (4 < len(value) < 130 and not value.endswith((".", ",", ";"))
                 and (span["size"] >= body_size + 1.5 or span["bold"])):
             headings[value] = 1 if span["size"] >= body_size + 4 else (2 if span["size"] >= body_size + 2 else 3)
+            # Program-wide credit distributions are siblings of course entries,
+            # even where the PDF uses body-sized bold rather than a large font.
+            if value.casefold().startswith("credit distribution and courses"):
+                headings[value] = 1
     result, buffer, heading = [], [], ""
     for line in row["text"].splitlines():
         normal = line.strip()

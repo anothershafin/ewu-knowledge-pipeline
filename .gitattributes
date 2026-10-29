@@ -1,2 +1,4 @@
 * text=auto eol=lf
 *.png binary
+# Preserve the byte-for-byte identity of the published frozen benchmark.
+eval/benchmark_questions.csv -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

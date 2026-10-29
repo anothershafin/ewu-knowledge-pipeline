@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-10-26T04:37:29.063700+06:00",
+  "generated_at": "2026-10-29T10:05:54.390996+06:00",
   "collection": {
     "sources": 17,
     "successful": 17,
     "failed": []
   },
   "structure": {
-    "sections": 3107,
+    "sections": 3071,
     "sections_by_source": {
-      "S1": 2867,
+      "S1": 2829,
       "W1": 11,
       "W2": 1,
-      "W3": 3,
+      "W3": 5,
       "W4": 1,
       "W5": 26,
       "W6": 9,
@@ -227,20 +227,20 @@
     "conflict_coverage": "Explicit undergraduate probation thresholds, dismissal, grade points/score bounds and retake facts; effective dates require human review."
   },
   "chunks": {
-    "chunks": 2920,
+    "chunks": 2888,
     "nominal_size": 300,
     "effective_cap": 254,
     "max_bge_tokens": 254,
     "by_topic": {
-      "other": 353,
+      "other": 354,
       "registration": 23,
-      "fees_refunds": 17,
+      "fees_refunds": 22,
       "graduation": 28,
       "admission": 22,
       "grading_cgpa": 16,
       "scholarship": 66,
       "conduct_discipline": 123,
-      "course_info": 2122,
+      "course_info": 2084,
       "calendar": 28,
       "attendance": 6,
       "grievance": 40,
@@ -250,10 +250,10 @@
       "online_classes": 13
     },
     "by_source": {
-      "S1": 2490,
+      "S1": 2453,
       "W1": 15,
       "W2": 5,
-      "W3": 4,
+      "W3": 9,
       "W4": 2,
       "W5": 26,
       "W6": 35,
@@ -269,17 +269,17 @@
     }
   },
   "pii": {
-    "redactions": 2556,
+    "redactions": 2558,
     "by_type": {
-      "PERSON": 2551,
+      "PERSON": 2553,
       "PHONE": 4,
       "EMAIL": 1
     },
     "by_detector": {
-      "ner": 2551,
+      "ner": 2553,
       "regex": 5
     },
-    "fragments": 4558,
+    "fragments": 4531,
     "fingerprint": "c7da51a609c928fa9c4d15176542e15e474880d32137cd44f90a669c01b47002",
     "threshold": 0.85,
     "device": "cuda",
@@ -304,17 +304,191 @@
   },
   "evaluation": {
     "annotation": {
-      "status": "pending human annotation",
-      "completed": 0,
-      "required": 100
+      "status": "complete",
+      "n": 99,
+      "raw_n": 100,
+      "excluded": [
+        {
+          "chunk_id": "d78185941577bc9600424f29a9b28862",
+          "excel_row": 48,
+          "reason": "The entire passage is Credit, a detached table-column header with insufficient topic context and an inherited unrelated course heading."
+        }
+      ],
+      "agreement": 0.9191919191919192,
+      "raw_agreement_including_flagged_fragments": 0.92,
+      "confusion": [
+        {
+          "human": "conduct_discipline",
+          "rule": "conduct_discipline",
+          "count": 4
+        },
+        {
+          "human": "course_info",
+          "rule": "course_info",
+          "count": 74
+        },
+        {
+          "human": "course_info",
+          "rule": "other",
+          "count": 2
+        },
+        {
+          "human": "graduation",
+          "rule": "course_info",
+          "count": 2
+        },
+        {
+          "human": "graduation",
+          "rule": "other",
+          "count": 1
+        },
+        {
+          "human": "online_classes",
+          "rule": "online_classes",
+          "count": 1
+        },
+        {
+          "human": "other",
+          "rule": "conduct_discipline",
+          "count": 1
+        },
+        {
+          "human": "other",
+          "rule": "fees_refunds",
+          "count": 1
+        },
+        {
+          "human": "other",
+          "rule": "graduation",
+          "count": 1
+        },
+        {
+          "human": "other",
+          "rule": "other",
+          "count": 6
+        },
+        {
+          "human": "plagiarism_ai",
+          "rule": "plagiarism_ai",
+          "count": 1
+        },
+        {
+          "human": "registration",
+          "rule": "registration",
+          "count": 1
+        },
+        {
+          "human": "scholarship",
+          "rule": "scholarship",
+          "count": 4
+        }
+      ],
+      "note": "Descriptive agreement on a review sample. If rules are tuned on it, agreement is not held-out accuracy.",
+      "reference_review": {
+        "annotation_sha256": "5f21c1d6239a817d2499bbffe8f66f484223a41fe7b47c516f5d90454d3d52dc",
+        "owner_labeled_passages": 100,
+        "assistant_guided_original_passages": 1,
+        "user_approved_assistant_corrections": 4,
+        "source_corpus_sha256": "f74f9a57e58d37ab467833fa395ae3072febdc5cbc6765bc2052ea78ec382859",
+        "original_human_snapshot": "work\\topic_label_review_2026-10-29\\annotation_sample_human_original_657cfc99a24e.csv",
+        "sampling_note": "Random sample dominated by course descriptions; aggregate agreement is not accuracy across all 16 categories.",
+        "version_note": "Completed topic labels are evaluated against their stored original rule labels. Corpus repairs are versioned separately; a detached header is retained in the original file but excluded with an explicit reason before scoring."
+      }
     },
     "pii": {
-      "status": "pending human annotation",
-      "pages": 24,
-      "completed": 0
+      "status": "complete",
+      "reference_review": {
+        "pages": 24,
+        "independent_human_reviewed_pages": 0,
+        "independent_human_review": false,
+        "assistant_prepared_spans": 97,
+        "preparation": "prepared on behalf of the project owner",
+        "source_pages_sha256": "3cad8cc3dd6bed18333f19f224a9ab86ba52e03c17cdb891d2ae0123086638ec",
+        "predictions_sha256": "5e839cb22f0892769bbb02dabd24a812a78dc21e6e02d9a85bae6b11fce9efee"
+      },
+      "all": {
+        "tp": 21,
+        "fp": 99,
+        "fn": 77,
+        "precision": 0.175,
+        "recall": 0.21428571428571427
+      },
+      "by_type": {
+        "PERSON": {
+          "tp": 21,
+          "fp": 99,
+          "fn": 77,
+          "precision": 0.175,
+          "recall": 0.21428571428571427
+        },
+        "EMAIL": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": null,
+          "recall": null
+        },
+        "PHONE": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": null,
+          "recall": null
+        },
+        "ID": {
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "precision": null,
+          "recall": null
+        }
+      },
+      "note": "Exact-span metrics on a deliberately mixed sample, not a population estimate. Empty denominators are null. Reference entries were prepared on behalf of the project owner; independent human verification is pending. These scores measure agreement with that reference."
     },
     "retrieval": {
-      "status": "pending frozen human-reviewed question set"
+      "status": "complete",
+      "question_sha256": "091d023220ffe00baf1b840c0095a0f562bb74cc28af86890cdae0cf47af0ba0",
+      "experiments": [
+        {
+          "model": "bge",
+          "nominal_size": 200,
+          "n": 40,
+          "Recall@1": 0.5,
+          "Recall@5": 0.825,
+          "MRR": 0.6375
+        },
+        {
+          "model": "bge",
+          "nominal_size": 300,
+          "n": 40,
+          "Recall@1": 0.475,
+          "Recall@5": 0.85,
+          "MRR": 0.6306730769230768
+        },
+        {
+          "model": "minilm",
+          "nominal_size": 200,
+          "n": 40,
+          "Recall@1": 0.475,
+          "Recall@5": 0.825,
+          "MRR": 0.6212806637806638
+        },
+        {
+          "model": "minilm",
+          "nominal_size": 300,
+          "n": 40,
+          "Recall@1": 0.525,
+          "Recall@5": 0.825,
+          "MRR": 0.6490873015873015
+        }
+      ],
+      "reference_review": {
+        "questions": 40,
+        "independent_human_reviewed_questions": 0,
+        "independent_human_review": false,
+        "preparation": "prepared on behalf of the project owner"
+      },
+      "metric_definition": "Recall@k is question hit rate (any accepted source locator, including exact section ID when supplied). MRR is truncated at 20. Locator hits do not measure generated-answer completeness."
     }
   }
 }

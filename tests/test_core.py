@@ -54,6 +54,35 @@ def test_html_sibling_headings_do_not_become_ancestors():
     assert probation["section_path"] == "rules > Rules > Probation"
 
 
+def test_html_full_width_fee_supplement_is_not_lost_with_sidebar():
+    from ewu_kb.extract import html_blocks
+    payload = ('<main><div class="col-md-8"><h2>Tuition</h2><p>' + 'Course fee details. ' * 30 +
+               '</p></div><aside><p>Unrelated navigation</p></aside>'
+               '<div class="col-md-12"><div class="bottom-body"><h3>Other fees</h3>'
+               '<table><tr><td>Admission fee</td><td>25000</td></tr></table>'
+               '</div></div></main>')
+    rows = html_blocks(payload, "W3")
+    text = " ".join(r["text"] for r in rows)
+    assert "Admission fee 25000" in text
+    assert "Unrelated navigation" not in text
+    assert sum(r["kind"] == "table" for r in rows) == 1
+
+
+def test_pdf_degree_credit_table_does_not_inherit_previous_course_heading():
+    from ewu_kb.structure import build_sections
+    title = "Credit Distribution and Courses for BS. In Applied Statistics"
+    row = {"kind": "pdf", "page": 168, "block": None, "anchor": "", "spans": [
+        {"text": title, "size": 10, "bold": True},
+        {"text": "Credit", "size": 10, "bold": True},
+        {"text": "Hours", "size": 10, "bold": True}],
+        "text": "PHY107: General Physics\n\n" + title + "\nMinimum 127 credits\nCredit\nHours\nTotal 127"}
+    result = build_sections({"S1": [row]}, {"S1": {"category": "bulletin", "url": "https://example.org", "version": "2019"}})
+    table = next(s for s in result if "Total 127" in s["text"])
+    assert table["section_path"] == "bulletin > " + title
+    assert "Minimum 127 credits" in table["text"]
+    assert not any(s["text"].strip() in ("Credit", "Hours") for s in result)
+
+
 def test_pii_rules_do_not_redact_course_codes_or_years():
     text = "Test test@example.org +8801712345678 01712-345678 02-55668200 ID:2026-1-60-001 CSE103 2019"
     spans = resolve_spans(text, regex_entities(text))
@@ -89,11 +118,57 @@ def test_exact_span_metrics():
     assert span_metrics([], [])["precision"] is None
 
 
+def test_delegated_preparation_is_not_independent_human_verification():
+    from ewu_kb.evaluate import pii_reference_review
+    pages = [{"reviewed": "yes", "reviewer": "Codex (on behalf of Reviewer)"},
+             {"reviewed": "yes", "reviewer": "Reviewer"}]
+    annotations = [{"reviewer": "Reviewer"}, {"reviewer": "Codex (on behalf of Reviewer)"}]
+    review = pii_reference_review(pages, annotations)
+    assert not review["independent_human_review"]
+    assert review["independent_human_reviewed_pages"] == 1
+    assert review["assistant_prepared_spans"] == 1
+    # A later explicit page review can establish human verification while retaining
+    # the history of who prepared the original spans.
+    pages[0]["reviewer"] = "Reviewer"
+    assert pii_reference_review(pages, annotations)["independent_human_review"]
+    assert not pii_reference_review([], [])["independent_human_review"]
+
+
 def test_page_relevance_requires_source_and_locator():
     result = {"doc_id": "S1", "page_start": 10, "page_end": 12, "section_path": "rules > grades"}
     assert relevant(result, {"expected_doc": "S1", "expected_page": "11"})
     assert not relevant(result, {"expected_doc": "W1", "expected_page": "11"})
     assert not relevant(result, {"expected_doc": "S1", "expected_page": "13"})
+
+
+def test_duplicate_html_headings_require_the_correct_section_id():
+    expected = {"expected_doc": "W5", "expected_section": "calendar > Undergraduate",
+                "expected_section_id": "undergraduate-2026"}
+    result = {"doc_id": "W5", "section_path": "calendar > Undergraduate", "section_id": "undergraduate-2025"}
+    assert not relevant(result, expected)
+    result["section_id"] = "undergraduate-2026"
+    assert relevant(result, expected)
+    expected["expected_section_id"] += "|undergraduate-2024"
+    result["section_id"] = "undergraduate-2024"
+    assert relevant(result, expected)
+
+
+def test_delegated_question_review_keeps_actual_provenance():
+    from ewu_kb.evaluate import question_reference_review
+    rows = [{"reviewed": "yes", "reviewer": "Codex (on behalf of Reviewer)"}]
+    assert not question_reference_review(rows)["independent_human_review"]
+    rows[0]["reviewer"] = "Reviewer"
+    assert question_reference_review(rows)["independent_human_review"]
+
+
+def test_topic_quality_exclusions_cannot_discard_unknown_or_unexplained_rows():
+    from ewu_kb.evaluate import scorable_topic_rows
+    rows = [{"chunk_id": "passage"}, {"chunk_id": "header"}]
+    assert scorable_topic_rows(rows, [{"chunk_id": "header", "reason": "Detached table header without context"}]) == rows[:1]
+    with pytest.raises(ValueError, match="known chunk"):
+        scorable_topic_rows(rows, [{"chunk_id": "unknown", "reason": "Unknown identifier"}])
+    with pytest.raises(ValueError, match="recorded data-quality reason"):
+        scorable_topic_rows(rows, [{"chunk_id": "header", "reason": ""}])
 
 
 def test_graph_ancestors_and_cycle():

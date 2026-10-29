@@ -1,7 +1,7 @@
 {
-  "checked_at": "2026-10-26T04:38:42.933726+06:00",
+  "checked_at": "2026-10-29T10:10:27.151807+06:00",
   "fixture_tests": {
-    "passed": 14,
+    "passed": 20,
     "failed": 0,
     "command": "python -m pytest -q",
     "network_or_models_required": false
@@ -17,26 +17,28 @@
     "description": "Readable layered CSE graph, unresolved nodes marked amber"
   },
   "report_layout_review": {
-    "stage": "final curated build",
+    "stage": "frozen-reference evaluation and source repairs",
     "desktop_overflow": false,
     "mobile_overflow": false,
     "broken_images": 0,
     "visually_inspected": true
   },
-  "human_evaluation": "pending",
+  "human_evaluation": "Full independent human verification of the delegated PII and retrieval references is pending.",
   "index_idempotence": {
     "model": "bge",
     "nominal_size": 300,
-    "verified_vectors": 2920,
+    "verified_vectors": 2888,
     "unchanged_index_fingerprint": true
   },
   "search_smoke": {
     "topic_filter_passed": true,
+    "document_filter_passed": true,
     "query_is_not_a_gold_evaluation_question": true
   },
   "dependency_check": "No broken requirements found",
   "notebook": {
     "executed_code_cells": 10,
     "errors": 0
-  }
+  },
+  "reference_evaluation": "complete"
 }

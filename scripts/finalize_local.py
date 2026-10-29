@@ -53,8 +53,12 @@ def main():
     nbformat.write(notebook, path)
     stats = {stage: load_stats(stage) for stage in ("collect", "extract", "structure", "pii", "chunk_200", "chunk_300", "graph", "evaluate")}
     evaluation_complete = all(stats["evaluate"].get(key, {}).get("status") == "complete" for key in ("annotation", "pii", "retrieval"))
+    human_evaluation_complete = evaluation_complete and all(
+        stats["evaluate"].get(stage, {}).get("reference_review", {}).get("independent_human_review", False)
+        for stage in ("pii", "retrieval"))
     write_json("reports/local_completion.json", {"at": now(), "notebook_executed": True,
-                                               "dependency_pins": len(pins), "human_evaluation": "complete" if evaluation_complete else "pending",
+                                               "dependency_pins": len(pins), "reference_evaluation": "complete" if evaluation_complete else "pending",
+                                               "human_evaluation": "complete" if human_evaluation_complete else "pending",
                                                "automated_stages": "complete", "statistics": stats})
     print(f"Walkthrough executed; {len(pins)} Windows dependency pins recorded.")
 

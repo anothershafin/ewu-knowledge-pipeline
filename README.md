@@ -6,22 +6,22 @@ A reproducible knowledge engineering pipeline for East West University's public 
 
 ## Current build status
 
-The automated build, four indexes, integration checks and executed walkthrough are complete. **Independent human annotation and retrieval scoring remain pending.** No accuracy or privacy-recall claim is made yet.
+The automated build, four indexes and source-reference evaluation are complete locally. **BGE-small at the nominal 300-token setting retrieved an accepted source in its top five results for 34 of 40 frozen questions (85%).** The topic sample was labeled by the project owner and adjudicated with assistance; the PII and retrieval references were prepared by Codex on the owner's behalf. These are small, source-specific measurements, with review provenance and limitations reported explicitly.
 
 | Measured artifact | Count |
 |---|---:|
 | Collected public source URLs | 17 |
 | Sources with usable content | 16 |
 | PDF pages (bulletin + four policies) | 556 |
-| Structured sections | 3,107 |
-| Sections excluded from student search | 563 |
-| Curated chunks, 200-token setting | 3,222 |
-| Curated chunks, nominal 300 / effective 254 setting | 2,920 |
-| Detected body redaction events | 2,556 |
+| Structured sections | 3,071 |
+| Sections excluded from student search | 562 |
+| Curated chunks, 200-token setting | 3,194 |
+| Curated chunks, nominal 300 / effective 254 setting | 2,888 |
+| Detected body redaction events | 2,558 |
 | CSE catalogue courses | 46 |
 | Current prerequisite graph nodes / edges | 48 / 40 |
 | Explicit source-rule comparisons / differences | 26 / 19 |
-| Passing fixture tests | 14 |
+| Passing fixture tests | 20 |
 
 The admissions FAQ URL currently returns an empty main content panel and is quarantined. The graph includes two unresolved reference nodes. Counts describe this snapshot and automated processing; they are not correctness estimates. See [the quality report](reports/quality_report.html), [integration checks](reports/integration_checks.json) and [model integrity checks](reports/model_integrity.json). GitHub Actions is configured; remote CI has not been run yet.
 
@@ -95,14 +95,27 @@ To use Neo4j, copy `graph/nodes.csv` and `graph/edges.csv` into its import direc
 
 ## Evaluation and honest reporting
 
-See [eval/README.md](eval/README.md). Human labels, spans and source answers are intentionally blank until reviewed. Freeze the 40-question set before inspecting retrieval results; the primary comparison uses no gold topic filters or source preference bonus. Report Recall@1, Recall@5 (question hit rate) and MRR@20. Never substitute detector predictions for human annotations.
+See [eval/README.md](eval/README.md) and the published [40-question reference](eval/benchmark_questions.csv). The reference was checked directly against saved official sources and frozen before any search results were inspected. The primary comparison uses no gold topic filters or source preference bonus. Recall@k is the question hit rate for an accepted source locator; it does not measure the completeness of a generated answer. MRR is truncated at 20.
+
+| Model | Nominal / maximum content tokens | Recall@1 | Recall@5 | MRR@20 |
+|---|---:|---:|---:|---:|
+| BGE-small | 200 / 200 | 50.0% | 82.5% | 0.6375 |
+| BGE-small | 300 / 254 | 47.5% | 85.0% | 0.6307 |
+| MiniLM | 200 / 200 | 47.5% | 82.5% | 0.6213 |
+| MiniLM | 300 / 254 | 52.5% | 82.5% | 0.6491 |
+
+Topic agreement is **91/99 (91.9%)** on scorable passages. All 100 original entries are retained; one detached table-column header was documented as unscorable before scoring. Raw agreement including that fragment is 92/100. The sample is dominated by course descriptions, one original label received assistance, and four corrections were explicitly approved by the owner; aggregate agreement is not accuracy across all 16 topics.
+
+The preserved 24-page PII reference contains 98 person-name occurrences (one selected by the owner, 97 prepared on his behalf). Against its preserved ingestion-prediction snapshot, exact-span precision is **17.5%** and recall **21.4%**. A boundary diagnostic finds some overlap for 74/98 reference names, showing that many predictions capture only parts of names. Overlap is diagnostic and does not replace the exact-span results. No full email, phone or student-ID instances occur in this reference, so their precision/recall is undefined. Independent human verification of the complete PII and retrieval references remains pending.
+
+Corpus repairs were completed before retrieval-reference freezing: the fee extractor now retains full-width fee supplements, and PDF credit-distribution tables no longer inherit an unrelated course heading. Completed topic/PII references retain their original source snapshot; retrieval uses the repaired corpus. The calendar index contains schedule links, so two unsupported class-start/drop-date drafts were replaced with calendar-listing questions before scoring. No tuning was performed on retrieval outcomes.
 
 The plan's nominal 300-token setting is capped at **254 content tokens** because MiniLM defaults to 256 including special tokens. Both model tokenizers validate every passage; secondary splits prevent silent truncation. The two actual settings are at most 200 and 254 tokens. Keep this difference visible when interpreting results.
 
 ## Privacy, scope and limitations
 
 - Only configured public HTTPS sources under `ewubd.edu` are collected. No portal access or login. Collection stops on unresolved robots restrictions.
-- Raw PDFs, HTML, full extracted text, Chroma data, model caches and private annotation pages are Git-ignored. Only manifests, aggregate reports, code and a small explicitly reviewed redacted sample are eligible for publication.
+- Raw PDFs, HTML, full extracted text, Chroma data, model caches and private annotation pages are Git-ignored. Published materials include code, manifests, aggregate reports, a source-locator benchmark without source-page reproductions, and one explicitly reviewed redacted sample.
 - Names use `dslim/bert-base-NER`; email, Bangladesh phone and ID patterns use regexes. NER confidence and allowlists are configurable. Automated detection can miss personal information. A SHA256 hash in the private log avoids directly recording values, but is not strong anonymization for guessable values.
 - Personnel rosters and bibliography sections from the bulletin are retained locally for the PII audit and excluded from student search using explicit heading rules. A development inspection found an undetected roster name; that finding motivated the exclusion. The exclusion is not a guarantee that all remaining personal information has been detected.
 - Version checks extract specific probation thresholds, dismissal cutoffs, letter-grade points and score bounds, and retake facts. Each discrepancy includes source locators. Differences need confirmation against official effective dates; the pipeline does not infer dates from retrieval time.

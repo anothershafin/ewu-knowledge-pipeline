@@ -1,0 +1,14 @@
+{
+  "schema_version": 2,
+  "sha256": "091d023220ffe00baf1b840c0095a0f562bb74cc28af86890cdae0cf47af0ba0",
+  "rows": 40,
+  "corpus_sha256": "5e85291b66cadfb469c0d158ae1be8a84775eec2b6f607425c4b316380131ab5",
+  "source_manifest_sha256": "9e0ee24c2678823a56bac86f1912bedea89a96e3eb96e0ad2ca689e891321215",
+  "reference_review": {
+    "questions": 40,
+    "independent_human_reviewed_questions": 0,
+    "independent_human_review": false,
+    "preparation": "prepared on behalf of the project owner"
+  },
+  "rule": "Frozen before retrieval evaluation; do not tune on this set"
+}

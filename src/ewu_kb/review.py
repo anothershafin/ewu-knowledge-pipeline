@@ -57,6 +57,7 @@ def run():
     if len(chunks) < 100:
         raise ValueError("Need at least 100 chunks for annotation sample")
     snapshot = ROOT / "work/review_snapshot.json"
+    previous = {}
     if snapshot.exists():
         previous = json.loads(snapshot.read_text())
         if previous["chunks_sha256"] != sha(ROOT / "data/processed/chunks.jsonl"):
@@ -116,6 +117,6 @@ def run():
 <aside id="selection">Select text inside a source page.</aside>
 ''' + "".join(panels) + '''<script>document.addEventListener('mouseup',()=>{const s=window.getSelection();if(!s.rangeCount||!s.toString())return;const r=s.getRangeAt(0);let p=r.startContainer.parentElement.closest('pre');if(!p||!p.contains(r.endContainer))return;const a=r.cloneRange();a.selectNodeContents(p);a.setEnd(r.startContainer,r.startOffset);const start=Array.from(a.toString()).length;const end=start+Array.from(s.toString()).length;document.querySelector('#selection').textContent=`sample_id=${p.dataset.id}, start=${start}, end=${end}, selected=${s.toString()}`;});</script>'''
         (ROOT / "work/pii_review.html").write_text(html_text, encoding="utf-8")
-    write_json("work/review_snapshot.json", {"chunks_sha256": sha(ROOT / "data/processed/chunks.jsonl"),
+    write_json("work/review_snapshot.json", {**previous, "chunks_sha256": sha(ROOT / "data/processed/chunks.jsonl"),
                                             "documents_sha256": sha(ROOT / "data/interim/documents_unredacted.jsonl")})
     print("Manual annotation files prepared. No human labels or gold answers have been filled.")
