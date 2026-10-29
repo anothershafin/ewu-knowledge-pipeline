@@ -44,4 +44,6 @@ annotation:
     course_info: ['prerequisite', 'credit hours', 'course objectives', 'course outcomes']
 curation:
   # Retain these sections for extraction/PII audits, exclude from student search.
-  excluded_bulletin_paths: [' > administration', 'administrative officers', 'administrative officials', 'faculty members', 'faculty list', 'professor', 'lecturer', 'board of trustees', '[person]', 'reference book', 'references', 'bibliography']
+  excluded_bulletin_paths: [' > administration', 'administrative officers', 'administrative officials', 'faculty members', 'faculty list', 'professor', 'lecturer', 'board of trustees', '[person]', 'reference book', 'references', 'bibliography', 'administration and management', 'publication committee', 'coordinators and advisers']
+  # Non-course passages (any source) that are mostly redacted names are excluded from search.
+  roster_filter: {min_tags: 4, min_density: 4.0}

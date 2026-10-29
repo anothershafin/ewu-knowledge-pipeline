@@ -120,9 +120,9 @@ def test_exact_span_metrics():
 
 def test_delegated_preparation_is_not_independent_human_verification():
     from ewu_kb.evaluate import pii_reference_review
-    pages = [{"reviewed": "yes", "reviewer": "Codex (on behalf of Reviewer)"},
+    pages = [{"reviewed": "yes", "reviewer": "AI-assisted (on behalf of Reviewer)"},
              {"reviewed": "yes", "reviewer": "Reviewer"}]
-    annotations = [{"reviewer": "Reviewer"}, {"reviewer": "Codex (on behalf of Reviewer)"}]
+    annotations = [{"reviewer": "Reviewer"}, {"reviewer": "AI-assisted (on behalf of Reviewer)"}]
     review = pii_reference_review(pages, annotations)
     assert not review["independent_human_review"]
     assert review["independent_human_reviewed_pages"] == 1
@@ -155,7 +155,7 @@ def test_duplicate_html_headings_require_the_correct_section_id():
 
 def test_delegated_question_review_keeps_actual_provenance():
     from ewu_kb.evaluate import question_reference_review
-    rows = [{"reviewed": "yes", "reviewer": "Codex (on behalf of Reviewer)"}]
+    rows = [{"reviewed": "yes", "reviewer": "AI-assisted (on behalf of Reviewer)"}]
     assert not question_reference_review(rows)["independent_human_review"]
     rows[0]["reviewer"] = "Reviewer"
     assert question_reference_review(rows)["independent_human_review"]
@@ -226,3 +226,65 @@ def test_detector_cache_hash_ignores_formatting_but_tracks_code(tmp_path):
     assert first == semantic_code_sha(path)
     path.write_text("x=2\n")
     assert first != semantic_code_sha(path)
+
+
+def _person(text, fragment, occurrence=0):
+    start = -1
+    for _ in range(occurrence + 1):
+        start = text.index(fragment, start + 1)
+    return {"start": start, "end": start + len(fragment), "type": "PERSON", "detector": "ner", "score": .95}
+
+
+def test_person_fragments_expand_to_whole_names():
+    from ewu_kb.pii import repair_person_spans
+    text = "Committee: Mr. Abul Kalam Rahim Member Secretary"
+    spans = repair_person_spans(text, [_person(text, "Ka"), _person(text, "him")])
+    assert [text[s["start"]:s["end"]] for s in spans] == ["Abul Kalam Rahim"]
+    assert redact(text, spans) == "Committee: Mr. [PERSON] Member Secretary"
+
+
+def test_honorific_and_initials_are_kept_with_the_name():
+    from ewu_kb.pii import repair_person_spans
+    text = "Chairperson Dr. Md. Karim Uddin, Department of Physics"
+    spans = repair_person_spans(text, [_person(text, "Kar")])
+    assert text[spans[0]["start"]:spans[0]["end"]] == "Md. Karim Uddin"
+
+
+def test_technical_eponyms_are_not_personal_data():
+    from ewu_kb.pii import repair_person_spans
+    text = "Apply Norton's theorem, a Voronoi diagram and the Laplace transform."
+    candidates = [_person(text, "Nor"), _person(text, "V"), _person(text, "Laplace")]
+    assert repair_person_spans(text, candidates) == []
+
+
+def test_name_completion_stops_at_role_words():
+    from ewu_kb.pii import repair_person_spans
+    text = "Ms. Nasrin Akter Chairperson"
+    spans = repair_person_spans(text, [_person(text, "Nasrin")])
+    assert text[spans[0]["start"]:spans[0]["end"]] == "Nasrin Akter"
+    assert redact(text, resolve_spans(text, spans)) == "Ms. [PERSON] Chairperson"
+
+
+def test_roster_like_passages_are_excluded_from_search():
+    from ewu_kb.chunk import make_chunks, roster_like
+    roster = "Members: Mr. [PERSON] Member, Ms. [PERSON] Member, Dr. [PERSON] Member, Mr. [PERSON] Secretary"
+    policy = "A student may submit a grievance in writing. The committee chaired by [PERSON] reviews it within ten days."
+    assert roster_like(roster) and not roster_like(policy)
+    base = {"doc_id": "P4", "source_version": "v1", "source_url": "https://example.org", "topic": "grievance",
+            "pii_filtered": True, "pii_fingerprint": "abc"}
+    documents = [{**base, "section_id": "r", "section_path": "Members", "fragments": [{"page": 1, "block": None, "text": roster}]},
+                 {**base, "section_id": "p", "section_path": "Procedure", "fragments": [{"page": 2, "block": None, "text": policy}]}]
+    stats = {}
+    rows = make_chunks(documents, TinyTokenizer(), 50, 5, roster_filter={"min_tags": 4, "min_density": 4.0}, stats=stats)
+    assert [r["section_id"] for r in rows] == ["p"]
+    assert stats["roster_like_passages_excluded"] == 1
+
+
+def test_roster_filter_does_not_remove_course_descriptions():
+    from ewu_kb.chunk import make_chunks
+    text = "Theorists: [PERSON], [PERSON], [PERSON] and [PERSON] on social change"
+    document = {"doc_id": "S1", "source_version": "v1", "source_url": "https://example.org", "topic": "course_info",
+                "pii_filtered": True, "pii_fingerprint": "abc", "section_id": "c", "section_path": "SOC 101",
+                "fragments": [{"page": 1, "block": None, "text": text}]}
+    rows = make_chunks([document], TinyTokenizer(), 50, 5, roster_filter={"min_tags": 4, "min_density": 4.0})
+    assert len(rows) == 1

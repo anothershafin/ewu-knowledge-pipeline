@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-29T10:05:54.390996+06:00",
+  "generated_at": "2026-10-29T22:36:54.926794+06:00",
   "collection": {
     "sources": 17,
     "successful": 17,
@@ -227,60 +227,65 @@
     "conflict_coverage": "Explicit undergraduate probation thresholds, dismissal, grade points/score bounds and retake facts; effective dates require human review."
   },
   "chunks": {
-    "chunks": 2888,
+    "chunks": 2842,
     "nominal_size": 300,
     "effective_cap": 254,
     "max_bge_tokens": 254,
+    "roster_filter": {
+      "min_tags": 4,
+      "min_density": 4.0
+    },
+    "roster_like_passages_excluded": 8,
     "by_topic": {
-      "other": 354,
-      "registration": 23,
-      "fees_refunds": 22,
-      "graduation": 28,
-      "admission": 22,
-      "grading_cgpa": 16,
-      "scholarship": 66,
+      "other": 327,
+      "registration": 21,
+      "graduation": 27,
+      "grading_cgpa": 15,
       "conduct_discipline": 123,
-      "course_info": 2084,
+      "admission": 19,
+      "course_info": 2080,
+      "scholarship": 61,
       "calendar": 28,
       "attendance": 6,
+      "fees_refunds": 21,
       "grievance": 40,
-      "plagiarism_ai": 52,
+      "plagiarism_ai": 50,
       "probation_dismissal": 9,
       "retake": 2,
       "online_classes": 13
     },
     "by_source": {
-      "S1": 2453,
+      "S1": 2415,
       "W1": 15,
       "W2": 5,
       "W3": 9,
       "W4": 2,
       "W5": 26,
-      "W6": 35,
+      "W6": 31,
       "W8": 13,
-      "C1": 109,
-      "C2": 51,
+      "C1": 108,
+      "C2": 50,
       "C3": 59,
       "C4": 20,
-      "P1": 19,
-      "P2": 17,
+      "P1": 18,
+      "P2": 16,
       "P3": 27,
       "P4": 28
     }
   },
   "pii": {
-    "redactions": 2558,
+    "redactions": 1796,
     "by_type": {
-      "PERSON": 2553,
+      "PERSON": 1791,
       "PHONE": 4,
       "EMAIL": 1
     },
     "by_detector": {
-      "ner": 2553,
+      "ner": 1791,
       "regex": 5
     },
     "fragments": 4531,
-    "fingerprint": "c7da51a609c928fa9c4d15176542e15e474880d32137cd44f90a669c01b47002",
+    "fingerprint": "ac0bd61ce55496840d828514d5076dba129e64e9ce6eabd8443deac513a3bffb",
     "threshold": 0.85,
     "device": "cuda",
     "precision_recall": "pending human annotation; detection is not a guarantee of anonymization"
@@ -443,19 +448,62 @@
           "recall": null
         }
       },
+      "current_detector": {
+        "all": {
+          "tp": 42,
+          "fp": 47,
+          "fn": 56,
+          "precision": 0.47191011235955055,
+          "recall": 0.42857142857142855
+        },
+        "by_type": {
+          "PERSON": {
+            "tp": 42,
+            "fp": 47,
+            "fn": 56,
+            "precision": 0.47191011235955055,
+            "recall": 0.42857142857142855
+          },
+          "EMAIL": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null
+          },
+          "PHONE": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null
+          },
+          "ID": {
+            "tp": 0,
+            "fp": 0,
+            "fn": 0,
+            "precision": null,
+            "recall": null
+          }
+        },
+        "predictions_sha256": "0e43278e9382c743357c61ba2360fdd335c19c1b80e7affcc41e6b3c0fd46c24",
+        "generated_at": "2026-10-29T20:07:53.406438+06:00",
+        "note": "Current detector with name-boundary repair, scored on the same preserved pages and reference. The reference was seen before the repair, so this is not a held-out estimate."
+      },
+      "original_snapshot_note": "The 'all' and 'by_type' blocks score the preserved original ingestion snapshot.",
       "note": "Exact-span metrics on a deliberately mixed sample, not a population estimate. Empty denominators are null. Reference entries were prepared on behalf of the project owner; independent human verification is pending. These scores measure agreement with that reference."
     },
     "retrieval": {
       "status": "complete",
-      "question_sha256": "091d023220ffe00baf1b840c0095a0f562bb74cc28af86890cdae0cf47af0ba0",
+      "question_sha256": "43a3c52b607808c89025b7ed94834930ede5b8073b88e4918693836131761862",
       "experiments": [
         {
           "model": "bge",
           "nominal_size": 200,
           "n": 40,
           "Recall@1": 0.5,
-          "Recall@5": 0.825,
-          "MRR": 0.6375
+          "Recall@5": 0.85,
+          "MRR": 0.6425
         },
         {
           "model": "bge",
@@ -463,7 +511,7 @@
           "n": 40,
           "Recall@1": 0.475,
           "Recall@5": 0.85,
-          "MRR": 0.6306730769230768
+          "MRR": 0.6390064102564103
         },
         {
           "model": "minilm",
@@ -471,7 +519,7 @@
           "n": 40,
           "Recall@1": 0.475,
           "Recall@5": 0.825,
-          "MRR": 0.6212806637806638
+          "MRR": 0.617317149225044
         },
         {
           "model": "minilm",
@@ -482,6 +530,12 @@
           "MRR": 0.6490873015873015
         }
       ],
+      "corpus": {
+        "chunks_sha256": "3544d76cb727d4ce27a2c6927dc799c135489b041cab0b57a9c4c6c84c46a156",
+        "version": "v3: PII name-boundary repair and roster filter (2026-10-29)",
+        "previous_chunks_sha256": "5e85291b66cadfb469c0d158ae1be8a84775eec2b6f607425c4b316380131ab5",
+        "note": "Frozen questions unchanged; locators re-validated against this corpus version."
+      },
       "reference_review": {
         "questions": 40,
         "independent_human_reviewed_questions": 0,

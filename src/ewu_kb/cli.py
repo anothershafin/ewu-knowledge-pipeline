@@ -10,7 +10,7 @@ def main():
     setup_paths()
     parser = argparse.ArgumentParser(description="Public university document engineering and cited retrieval")
     sub = parser.add_subparsers(dest="command", required=True)
-    for name in ("collect", "extract", "clean", "structure", "pii", "annotate", "review", "freeze-questions", "evaluate", "graph", "report", "validate", "run-all"):
+    for name in ("collect", "extract", "clean", "structure", "pii", "pii-recheck", "annotate", "review", "freeze-questions", "evaluate", "graph", "report", "validate", "run-all"):
         sub.add_parser(name)
     p = sub.add_parser("chunk")
     p.add_argument("--size", type=int, choices=[200, 300], default=300)
@@ -61,6 +61,9 @@ def main():
             print(node, graph.nodes[node]["title"])
         print("Original condition:", graph.nodes[args.code.upper()].get("prerequisite_expression") or "not specified")
         print("Reference graph only; consult original prerequisite expressions for alternatives and other conditions.")
+    elif args.command == "pii-recheck":
+        from .pii import recheck_review_pages
+        recheck_review_pages()
     elif args.command == "freeze-questions":
         from .evaluate import freeze_questions
         freeze_questions()

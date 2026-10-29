@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from collections import Counter
 
 from .common import ROOT, config, read_jsonl, record, revision, sha, write_jsonl
@@ -21,7 +22,14 @@ def windows(text, tokenizer, size, overlap):
             break
 
 
-def make_chunks(documents, tokenizer, size, overlap, validators=()):
+def roster_like(text, min_tags=4, min_density=4.0):
+    """Passages that are mostly redacted names (staff lists, committees) are kept out of search."""
+    tags = text.count("[PERSON]")
+    words = len(re.findall(r"\w+", text.replace("[PERSON]", " ")))
+    return tags >= min_tags and tags * 100 / max(words, 1) >= min_density
+
+
+def make_chunks(documents, tokenizer, size, overlap, validators=(), roster_filter=None, stats=None):
     rows, seen = [], set()
     for document in documents:
         if not document.get("pii_filtered"):
@@ -49,6 +57,11 @@ def make_chunks(documents, tokenizer, size, overlap, validators=()):
                             revised.append((p_start + v_start, p_start + v_end, v_text))
                 pieces = revised
             for begin, finish, passage in pieces:
+                # Course descriptions are never staff lists; they may cite theorists or authors.
+                if roster_filter and document.get("topic") != "course_info" and roster_like(passage, **roster_filter):
+                    if stats is not None:
+                        stats["roster_like_passages_excluded"] = stats.get("roster_like_passages_excluded", 0) + 1
+                    continue
                 # Deduplicate within source/version so independent source citations survive.
                 key = sha(document["doc_id"] + document["source_version"] + passage)
                 if key in seen:
@@ -75,8 +88,10 @@ def run(size=300):
     tokenizers = {key: AutoTokenizer.from_pretrained(settings["models"][key]["name"], revision=revision(key))
                   for key in ("bge", "minilm")}
     cap = min(size, settings["chunking"]["shared_content_cap"])
+    filtering = {}
+    roster = settings["curation"].get("roster_filter")
     rows = make_chunks(read_jsonl("data/processed/documents.jsonl"), tokenizers["bge"], cap,
-                       settings["chunking"]["overlap"], [(tokenizers["minilm"], cap)])
+                       settings["chunking"]["overlap"], [(tokenizers["minilm"], cap)], roster, filtering)
     if not rows:
         raise ValueError("No chunks produced")
     for row in rows:
@@ -90,5 +105,6 @@ def run(size=300):
             assert len(tokenizer.encode(row["text"], add_special_tokens=True)) <= 256
     record(f"chunk_{size}", {"chunks": len(rows), "nominal_size": size, "effective_cap": cap,
                               "max_bge_tokens": max(r["n_tokens"] for r in rows),
+                              "roster_filter": roster, **filtering,
                               "by_topic": dict(Counter(r["topic"] for r in rows)),
                               "by_source": dict(Counter(r["doc_id"] for r in rows))})

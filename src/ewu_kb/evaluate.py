@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from collections import Counter
 
-from .common import ROOT, read_csv, read_jsonl, record, sha, write_csv, write_json
+from .common import ROOT, read_csv, read_jsonl, record, semantic_code_sha, sha, write_csv, write_json
 
 
 def retrieval_metrics(ranked_relevance):
@@ -26,16 +26,15 @@ def span_metrics(gold, predicted):
 
 def question_reference_review(rows):
     human = sum(r.get("reviewed") == "yes" and bool(r.get("reviewer"))
-                and not r["reviewer"].strip().casefold().startswith(("codex", "assistant")) for r in rows)
+                and not r["reviewer"].strip().casefold().startswith(("ai-assisted", "assistant")) for r in rows)
     return {"questions": len(rows), "independent_human_reviewed_questions": human,
             "independent_human_review": bool(rows) and human == len(rows),
             "preparation": "prepared on behalf of the project owner" if human < len(rows) else "reviewer-labeled reference"}
 
 
-def freeze_questions():
+def check_question_locators(rows, documents):
+    """Every gold locator must exist in the given corpus (used at freeze time and on corpus re-versions)."""
     from .annotate import TOPICS
-    rows = read_csv("eval/questions.csv")
-    documents = read_jsonl("data/processed/documents.jsonl")
     known = {d["doc_id"] for d in documents}
     if len(rows) != 40 or len({r["qid"] for r in rows}) != 40:
         raise ValueError("Exactly 40 uniquely identified questions required")
@@ -58,6 +57,11 @@ def freeze_questions():
                     raise ValueError("Expected PDF page is not present in the selected source")
         elif not any(row["expected_section"].casefold() in d["section_path"].casefold() for d in accepted):
             raise ValueError("Expected section is not present in the selected source")
+
+
+def freeze_questions():
+    rows = read_csv("eval/questions.csv")
+    check_question_locators(rows, read_jsonl("data/processed/documents.jsonl"))
     target = ROOT / "eval/frozen/questions.csv"
     if target.exists():
         if sha(target) != sha(ROOT / "eval/questions.csv"):
@@ -109,7 +113,7 @@ def annotation_results():
 def pii_reference_review(pages, annotations):
     """Distinguish completed preparation from independent human verification."""
     def by_assistant(row):
-        return row.get("reviewer", "").strip().casefold().startswith(("codex", "assistant"))
+        return row.get("reviewer", "").strip().casefold().startswith(("ai-assisted", "assistant"))
 
     human_pages = sum(r.get("reviewed") == "yes" and bool(r.get("reviewer")) and not by_assistant(r)
                       for r in pages)
@@ -151,6 +155,22 @@ def pii_results():
               "all": span_metrics(gold, pred), "by_type": {}}
     for kind in ("PERSON", "EMAIL", "PHONE", "ID"):
         result["by_type"][kind] = span_metrics({x for x in gold if x[3] == kind}, {x for x in pred if x[3] == kind})
+    current_path = ROOT / "work/pii_review_predictions_current.jsonl"
+    meta_path = ROOT / "work/pii_review_predictions_current.meta.json"
+    if current_path.exists() and meta_path.exists():
+        meta = json.loads(meta_path.read_text(encoding="utf-8"))
+        if meta.get("source_pages_sha256") != review["source_pages_sha256"]:
+            raise ValueError("Current-detector predictions were made on different review pages")
+        if meta.get("pii_code_sha256") != semantic_code_sha(ROOT / "src/ewu_kb/pii.py"):
+            raise ValueError("PII code changed after the current-detector recheck; run pii-recheck again")
+        now_pred = {(r["sample_id"], e["start"], e["end"], e["type"]) for r in read_jsonl("work/pii_review_predictions_current.jsonl") for e in r["entities"]}
+        result["current_detector"] = {"all": span_metrics(gold, now_pred), "by_type": {
+            kind: span_metrics({x for x in gold if x[3] == kind}, {x for x in now_pred if x[3] == kind})
+            for kind in ("PERSON", "EMAIL", "PHONE", "ID")},
+            "predictions_sha256": sha(current_path), "generated_at": meta.get("generated_at"),
+            "note": "Current detector with name-boundary repair, scored on the same preserved pages and reference. "
+                    "The reference was seen before the repair, so this is not a held-out estimate."}
+        result["original_snapshot_note"] = "The 'all' and 'by_type' blocks score the preserved original ingestion snapshot."
     result["note"] = "Exact-span metrics on a deliberately mixed sample, not a population estimate. Empty denominators are null."
     if not review["independent_human_review"]:
         result["note"] += " Reference entries were prepared on behalf of the project owner; independent human verification is pending. These scores measure agreement with that reference."
@@ -170,6 +190,24 @@ def relevant(result, expected):
     return expected["expected_section"].casefold() in result["section_path"].casefold()
 
 
+def accepted_corpus_version(actual, questions):
+    """Allow scoring unchanged frozen questions on a documented, re-validated corpus version.
+
+    The questions use source locators (document + PDF page or section), not chunk IDs, so they stay
+    valid when chunking or redaction changes. The new corpus must be recorded in
+    work/corpus_versions.json and every locator is checked again against it.
+    """
+    path = ROOT / "work/corpus_versions.json"
+    versions = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    current = versions.get("current", {})
+    if current.get("chunks_sha256") != actual or not current.get("retrieval_questions_revalidated"):
+        raise ValueError("Retrieval corpus changed after question freeze; preserve and version the evaluation")
+    check_question_locators(questions, read_jsonl("data/processed/documents.jsonl"))
+    return {"chunks_sha256": actual, "version": current.get("label", "documented corpus version"),
+            "previous_chunks_sha256": versions.get("previous", {}).get("chunks_sha256"),
+            "note": "Frozen questions unchanged; locators re-validated against this corpus version."}
+
+
 def run():
     result = {"annotation": annotation_results(), "pii": pii_results(), "retrieval": {"status": "pending frozen source-reviewed question set"}}
     path = ROOT / "eval/frozen/questions.csv"
@@ -179,8 +217,9 @@ def run():
         lock = json.loads((ROOT / "eval/frozen/questions.lock.json").read_text())
         if sha(path) != lock["sha256"]:
             raise ValueError("Question set changed after freeze")
-        if lock.get("corpus_sha256") and sha(ROOT / "data/processed/chunks.jsonl") != lock["corpus_sha256"]:
-            raise ValueError("Retrieval corpus changed after question freeze; preserve and version the evaluation")
+        corpus = {"chunks_sha256": sha(ROOT / "data/processed/chunks.jsonl"), "version": "corpus frozen with the questions"}
+        if lock.get("corpus_sha256") and corpus["chunks_sha256"] != lock["corpus_sha256"]:
+            corpus = accepted_corpus_version(corpus["chunks_sha256"], questions)
         experiments, per_question = [], []
         for key in ("bge", "minilm"):
             for size in (200, 300):
@@ -200,6 +239,7 @@ def run():
         write_csv("data/processed/retrieval_per_question.csv", per_question,
                   ["qid", "model", "nominal_size", "first_relevant_rank", "retrieved_ids"])
         result["retrieval"] = {"status": "complete", "question_sha256": lock["sha256"], "experiments": experiments,
+                               "corpus": corpus,
                                "reference_review": lock.get("reference_review", {"preparation": "not recorded"}),
                                "metric_definition": "Recall@k is question hit rate (any accepted source locator, including exact section ID when supplied). MRR is truncated at 20. Locator hits do not measure generated-answer completeness."}
     record("evaluate", result)
