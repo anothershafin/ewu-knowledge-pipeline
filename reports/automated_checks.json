@@ -40,5 +40,11 @@
     "executed_code_cells": 10,
     "errors": 0
   },
-  "reference_evaluation": "complete"
+  "reference_evaluation": "complete",
+  "remote_ci": {
+    "verified_commit": "258d56f70a0aaa54f506564328899ba7e0d802a2",
+    "conclusion": "success",
+    "run_url": "https://github.com/anothershafin/ewu-knowledge-pipeline/actions/runs/40816690858",
+    "platform": "GitHub Actions Ubuntu / Python 3.12"
+  }
 }

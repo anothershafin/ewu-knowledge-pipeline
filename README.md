@@ -23,7 +23,7 @@ The automated build, four indexes and source-reference evaluation are complete l
 | Explicit source-rule comparisons / differences | 26 / 19 |
 | Passing fixture tests | 20 |
 
-The admissions FAQ URL currently returns an empty main content panel and is quarantined. The graph includes two unresolved reference nodes. Counts describe this snapshot and automated processing; they are not correctness estimates. See [the quality report](reports/quality_report.html), [integration checks](reports/integration_checks.json) and [model integrity checks](reports/model_integrity.json). GitHub Actions is configured; remote CI has not been run yet.
+The admissions FAQ URL returns an empty main content panel in this snapshot and is quarantined. The graph includes two unresolved reference nodes. Counts describe the snapshot and automated processing; they are not correctness estimates. See [the quality report](reports/quality_report.html), [integration checks](reports/integration_checks.json) and [model integrity checks](reports/model_integrity.json). [GitHub Actions](https://github.com/anothershafin/ewu-knowledge-pipeline/actions/workflows/checks.yml) verifies the fixture tests on Linux without model weights or source downloads; the [first published check passed](https://github.com/anothershafin/ewu-knowledge-pipeline/actions/runs/40816690858).
 
 ## What it demonstrates
 
